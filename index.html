@@ -91,6 +91,16 @@
   .nav-works button:focus-visible{outline:2px solid var(--inju);outline-offset:2px}
 
   footer{margin-top:56px;text-align:center;font-size:11.5px;letter-spacing:.18em;color:var(--ink-soft);opacity:.7}
+  /* 외부 브라우저 안내창 */
+  .iab-overlay{position:fixed;inset:0;background:rgba(28,27,24,.55);z-index:100;display:none;align-items:flex-end;justify-content:center}
+  .iab-overlay.show{display:flex}
+  .iab-box{background:var(--paper);border-radius:18px 18px 0 0;padding:26px 22px 30px;max-width:480px;width:100%;box-shadow:0 -6px 30px rgba(0,0,0,.25)}
+  @media(min-width:640px){.iab-overlay{align-items:center}.iab-box{border-radius:18px;margin:0 20px}}
+  .iab-box h2{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:900;margin-bottom:10px}
+  .iab-box p{font-size:14.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px}
+  .iab-box .manual{font-size:13px;color:var(--ink-soft);opacity:.85;margin-top:12px;margin-bottom:0}
+  .iab-btn{display:block;width:100%;text-align:center;font-family:inherit;font-size:15.5px;font-weight:700;padding:14px 0;border-radius:999px;cursor:pointer;border:none;background:var(--inju);color:#fff;margin-bottom:9px}
+  .iab-btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--hairline);font-weight:500}
   [data-i18n]{transition:opacity .2s ease}
   body.switching [data-i18n]{opacity:0}
 </style>
@@ -167,6 +177,16 @@
   <footer>MUNGDOL · SEOUL · POEM &amp; CALLIGRAPHY BY ONE HAND</footer>
 </div>
 
+<div class="iab-overlay" id="iabOverlay" role="dialog" aria-modal="true">
+  <div class="iab-box">
+    <h2 id="iabTitle"></h2>
+    <p id="iabMsg"></p>
+    <button class="iab-btn" id="iabOpenBtn"></button>
+    <button class="iab-btn ghost" id="iabCloseBtn"></button>
+    <p class="manual" id="iabManual"></p>
+  </div>
+</div>
+
 <script src="works.js"></script>
 <script>
 const PER_PAGE = 24;
@@ -190,28 +210,48 @@ const UI = {
       artist_eyebrow:"작가", artist_body:"멍돌은 시를 쓰고, 그 시를 젓가락으로 다시 씁니다. 이 페이지의 글과 글씨는 모두 한 사람의 것입니다.",
       work:"작품", prev:"← 이전", next:"다음 →", rom_note:"* 붉은 글씨는 한국어 발음의 로마자 표기입니다.",
       search_ph:"작품 검색 (제목·시구)", empty:"검색 결과가 없습니다.", count:(n)=>`${n}개의 작품`,
-      page:(a,b)=>`${a} / ${b} 페이지`, pgPrev:"← 이전", pgNext:"다음 →"},
+      page:(a,b)=>`${a} / ${b} 페이지`, pgPrev:"← 이전", pgNext:"다음 →",
+      tts_fail:"이 브라우저에서는 음성 재생이 지원되지 않습니다.",
+      iab_title:"브라우저에서 열기", iab_msg:"지금 앱 안의 화면으로 보고 계셔서 시 낭송 등 일부 기능이 동작하지 않습니다. 크롬/사파리에서 열면 모든 기능을 사용할 수 있습니다.",
+      iab_open_android:"크롬으로 열기", iab_open_ios:"Safari로 열기", iab_close:"그냥 볼게요",
+      iab_copied:"주소가 복사되었습니다. Safari를 열고 주소창에 길게 눌러 붙여넣어 주세요.",
+      iab_manual:"자동 이동이 안 되면: 오른쪽 위 메뉴(⋮ 또는 공유 버튼)에서 '다른 브라우저로 열기'를 선택하세요."},
   en:{site_tag:"One-of-a-kind writing, made with a single bamboo chopstick", back:"All works", listen:"Hear the poem",
       story_eyebrow:"The story of this work", tool_eyebrow:"Not a brush. A chopstick.",
       tool_body:"This was written not with a brush but with a single bamboo chopstick. A chopstick can't hold ink the way a brush does — the strokes run dry and split, and that rough texture is Mungdol's signature. The same character can never be written twice.",
       artist_eyebrow:"The artist", artist_body:"Mungdol writes the poem, then writes it again with a chopstick. Both the words and the calligraphy on this page come from one hand.",
       work:"Work", prev:"← Prev", next:"Next →", rom_note:"* The red text is the Korean pronunciation — try reading it aloud.",
       search_ph:"Search works", empty:"No works found.", count:(n)=>`${n} works`,
-      page:(a,b)=>`Page ${a} of ${b}`, pgPrev:"← Prev", pgNext:"Next →"},
+      page:(a,b)=>`Page ${a} of ${b}`, pgPrev:"← Prev", pgNext:"Next →",
+      tts_fail:"Voice playback is not supported in this browser.",
+      iab_title:"Open in Browser", iab_msg:"You are viewing this inside an app, so some features (like voice playback) won't work. Open in Chrome or Safari for the full experience.",
+      iab_open_android:"Open in Chrome", iab_open_ios:"Open in Safari", iab_close:"Continue here",
+      iab_copied:"The address has been copied. Open Safari and paste it into the address bar.",
+      iab_manual:"If it doesn't open automatically: tap the menu (⋮ or share icon) and choose 'Open in browser'."},
   zh:{site_tag:"用一根竹筷写下的、世上独一无二的文字", back:"全部作品", listen:"听诗朗读",
       story_eyebrow:"这幅作品的故事", tool_eyebrow:"不是毛笔，是筷子",
       tool_body:"这些字不是用毛笔，而是用一根竹筷写成的。筷子不像毛笔那样含墨，笔画会干涩、开裂——那粗粝的痕迹正是Mungdol作品独有的表情。同一个字，永远无法写出第二次。",
       artist_eyebrow:"作家", artist_body:"Mungdol写下诗，再用筷子把诗写一遍。这一页上的文字与书法，都出自同一人之手。",
       work:"作品", prev:"← 上一幅", next:"下一幅 →", rom_note:"* 红色文字是韩语发音的罗马字标注，试着读出声来。",
       search_ph:"搜索作品", empty:"未找到作品。", count:(n)=>`${n}件作品`,
-      page:(a,b)=>`第 ${a} / ${b} 页`, pgPrev:"← 上一页", pgNext:"下一页 →"},
+      page:(a,b)=>`第 ${a} / ${b} 页`, pgPrev:"← 上一页", pgNext:"下一页 →",
+      tts_fail:"此浏览器不支持语音播放。",
+      iab_title:"在浏览器中打开", iab_msg:"您正在应用内浏览，部分功能（如语音朗读）无法使用。请在Chrome或Safari中打开以使用全部功能。",
+      iab_open_android:"用Chrome打开", iab_open_ios:"用Safari打开", iab_close:"继续浏览",
+      iab_copied:"网址已复制。请打开Safari，在地址栏长按粘贴。",
+      iab_manual:"如果无法自动跳转：请点击右上角菜单（⋮或分享按钮），选择\"在浏览器中打开\"。"},
   ja:{site_tag:"一本の竹箸で書いた、世界に一つだけの文字", back:"作品一覧", listen:"詩の朗読を聞く",
       story_eyebrow:"この作品の物語", tool_eyebrow:"筆ではなく、箸",
       tool_body:"この文字は筆ではなく、一本の竹箸で書かれました。箸は筆のように墨を含めないため、線はかすれ、割れます — その荒々しい跡がモンドル作品だけの表情です。同じ文字は二度と書けません。",
       artist_eyebrow:"作家", artist_body:"モンドルは詩を書き、その詩を箸で再び書きます。このページの言葉と文字は、すべて一人の手によるものです。",
       work:"作品", prev:"← 前へ", next:"次へ →", rom_note:"* 赤い文字は韓国語の発音（ローマ字）です。声に出して読んでみてください。",
       search_ph:"作品を検索", empty:"作品が見つかりません。", count:(n)=>`${n}点の作品`,
-      page:(a,b)=>`${a} / ${b} ページ`, pgPrev:"← 前へ", pgNext:"次へ →"}
+      page:(a,b)=>`${a} / ${b} ページ`, pgPrev:"← 前へ", pgNext:"次へ →",
+      tts_fail:"このブラウザでは音声再生に対応していません。",
+      iab_title:"ブラウザで開く", iab_msg:"アプリ内の画面でご覧のため、詩の朗読など一部の機能が動作しません。Chrome/Safariで開くとすべての機能をご利用いただけます。",
+      iab_open_android:"Chromeで開く", iab_open_ios:"Safariで開く", iab_close:"このまま見る",
+      iab_copied:"アドレスをコピーしました。Safariを開き、アドレスバーに長押しで貼り付けてください。",
+      iab_manual:"自動で開かない場合：右上のメニュー（⋮または共有ボタン）から「他のブラウザで開く」を選択してください。"}
 };
 
 let lang = "ko";
@@ -347,13 +387,89 @@ buttons.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
 
 /* ── 낭송 ── */
 $("listenBtn").addEventListener("click",()=>{
-  if(!("speechSynthesis" in window) || !currentId) return;
+  if(!currentId) return;
+  if(!("speechSynthesis" in window)){ if(IAB) showIab(); else alert(UI[lang].tts_fail); return; }
   const w = WORKS_DATA.find(x=>x.id===currentId);
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(w.lines.map(l=>l[0]).join(", "));
-  u.lang="ko-KR"; u.rate=0.82;
-  speechSynthesis.speak(u);
+  const text = w.lines.map(l=>l[0]).join(", ");
+
+  const speakNow = ()=>{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const voices = speechSynthesis.getVoices();
+    const koVoice = voices.find(v=>v.lang && v.lang.toLowerCase().startsWith("ko"));
+    if(koVoice) u.voice = koVoice;
+    u.lang="ko-KR"; u.rate=0.82;
+    speechSynthesis.speak(u);
+    /* 일부 아이폰 사파리는 시작 직후 멈추는 버그가 있어 재개 처리 */
+    setTimeout(()=>{ try{ if(speechSynthesis.paused) speechSynthesis.resume(); }catch(e){} }, 150);
+  };
+
+  /* 폰 브라우저는 음성 목록이 늦게 로딩되는 경우가 있어 대기 처리 */
+  if(speechSynthesis.getVoices().length){ speakNow(); }
+  else{
+    let done=false;
+    const go=()=>{ if(!done){ done=true; speakNow(); } };
+    speechSynthesis.onvoiceschanged = go;
+    setTimeout(go, 400);
+  }
 });
+
+/* ── 앱 내장 브라우저 감지 → 외부 브라우저 열기 안내 ── */
+const UA = navigator.userAgent || "";
+const IAB = /KAKAOTALK|NAVER\(|Instagram|FBAN|FBAV|Line\//i.test(UA);   // 카톡·네이버앱·인스타·페북·라인
+const IS_ANDROID = /Android/i.test(UA);
+const IS_KAKAO = /KAKAOTALK/i.test(UA);
+
+function externalUrl(){
+  /* 지금 보고 있는 작품을 이어받도록 해시를 ?goto= 로 변환 */
+  const base = location.origin + location.pathname;
+  const m = location.hash.match(/^#(work-\d{4})$/);
+  return m ? base + "?goto=" + m[1] : base;
+}
+function applyIabText(){
+  $("iabTitle").textContent = UI[lang].iab_title;
+  $("iabMsg").textContent = UI[lang].iab_msg;
+  $("iabOpenBtn").textContent = IS_ANDROID ? UI[lang].iab_open_android : UI[lang].iab_open_ios;
+  $("iabCloseBtn").textContent = UI[lang].iab_close;
+  $("iabManual").textContent = UI[lang].iab_manual;
+}
+function showIab(){ applyIabText(); $("iabOverlay").classList.add("show"); }
+function hideIab(){ $("iabOverlay").classList.remove("show"); }
+
+function copyUrl(url){
+  try{ navigator.clipboard.writeText(url); }
+  catch(e){
+    const t=document.createElement("textarea"); t.value=url;
+    document.body.appendChild(t); t.select();
+    try{ document.execCommand("copy"); }catch(e2){}
+    t.remove();
+  }
+}
+$("iabCloseBtn").addEventListener("click", hideIab);
+$("iabOverlay").addEventListener("click", e=>{ if(e.target.id==="iabOverlay") hideIab(); });
+$("iabOpenBtn").addEventListener("click", ()=>{
+  const url = externalUrl();
+  if(IS_ANDROID){
+    /* 안드로이드: 크롬으로 강제 전환 (인텐트 방식) */
+    const bare = url.replace(/^https?:\/\//, "");
+    location.href = "intent://" + bare + "#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=" + encodeURIComponent(url) + ";end";
+  }else if(IS_KAKAO){
+    /* 아이폰 카카오톡: 카톡의 외부 브라우저 열기 명령 */
+    location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(url);
+  }else{
+    /* 그 외 아이폰 앱: 자동 전환 불가 → 주소 복사 + 안내 */
+    copyUrl(url);
+    $("iabMsg").textContent = UI[lang].iab_copied;
+  }
+});
+if(IAB){ setTimeout(showIab, 600); }   // 앱 안에서 열면 접속 직후 안내
+
+/* ── QR·외부 전환으로 넘어온 ?goto= 주소 이어받기 ── */
+const gotoParam = new URLSearchParams(location.search).get("goto");
+if(gotoParam && /^work-\d{4}$/.test(gotoParam)){
+  history.replaceState(null, "", location.pathname);
+  location.hash = gotoParam;
+}
 
 /* ── 초기화 ── */
 const nav = (navigator.language||"ko").slice(0,2);
