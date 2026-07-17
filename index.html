@@ -52,20 +52,20 @@
   .count{font-size:12.5px;letter-spacing:.08em;color:var(--ink-soft)}
 
   /* ── 매소너리 그리드: 작품을 자르지 않는다 ── */
-  .grid{margin-top:34px;columns:2;column-gap:16px}
-  @media(min-width:700px){.grid{columns:3;column-gap:22px}}
-  @media(min-width:1000px){.grid{columns:4}}
-  .card{display:block;width:100%;break-inside:avoid;margin-bottom:26px;cursor:pointer;border:none;background:transparent;padding:0;text-align:left;font-family:inherit;color:inherit;animation:cardIn .7s var(--ease) both}
+  .grid{margin-top:34px;display:grid;grid-template-columns:repeat(2,1fr);gap:22px 16px}
+  @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:28px 22px}}
+  @media(min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
+  .card{display:block;width:100%;cursor:pointer;border:none;background:transparent;padding:0;text-align:left;font-family:inherit;color:inherit;animation:cardIn .7s var(--ease) both}
   @keyframes cardIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
   .card:nth-child(1){animation-delay:.02s}.card:nth-child(2){animation-delay:.07s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.17s}.card:nth-child(5){animation-delay:.22s}.card:nth-child(6){animation-delay:.27s}.card:nth-child(7){animation-delay:.32s}.card:nth-child(8){animation-delay:.37s}.card:nth-child(n+9){animation-delay:.42s}
   .card:focus-visible{outline:2px solid var(--inju);outline-offset:5px;border-radius:12px}
-  .card .frame{border-radius:4px;overflow:hidden;background:#fff;padding:9px;border:1px solid rgba(23,22,19,.16);box-shadow:var(--shadow-s);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .card .frame{border-radius:4px;overflow:hidden;background:#fff;padding:9px;border:1px solid rgba(23,22,19,.16);box-shadow:var(--shadow-s);aspect-ratio:5/7;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
   .card .frame img{outline:1px solid rgba(23,22,19,.09);outline-offset:-1px}
-  .card img{width:100%;display:block;transition:transform .6s var(--ease)}
+  .card img{width:100%;height:100%;object-fit:contain;background:#fff;display:block;transition:transform .6s var(--ease)}
   .card:hover .frame{transform:translateY(-6px);box-shadow:var(--shadow-m)}
   .card:hover img{transform:scale(1.035)}
   .card .no{margin-top:11px;font-size:10.5px;letter-spacing:.22em;color:var(--inju);font-weight:500}
-  .card .t{margin-top:2px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:15px;line-height:1.5;color:var(--ink)}
+  .card .t{margin-top:2px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:15px;line-height:1.5;color:var(--ink);height:3em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .empty{margin-top:48px;text-align:center;color:var(--ink-soft)}
 
   /* ── 페이지네이션 ── */
