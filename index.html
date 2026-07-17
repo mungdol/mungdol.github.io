@@ -91,6 +91,8 @@
   .nav-works button:focus-visible{outline:2px solid var(--inju);outline-offset:2px}
 
   footer{margin-top:56px;text-align:center;font-size:11.5px;letter-spacing:.18em;color:var(--ink-soft);opacity:.7}
+  footer .copyright-line{margin-top:14px;letter-spacing:.06em;font-weight:500}
+  footer .copyright-notice{margin:8px auto 0;max-width:460px;font-size:11px;letter-spacing:0;line-height:1.7;opacity:.9}
   /* 외부 브라우저 안내창 */
   .iab-overlay{position:fixed;inset:0;background:rgba(28,27,24,.55);z-index:100;display:none;align-items:flex-end;justify-content:center}
   .iab-overlay.show{display:flex}
@@ -174,7 +176,12 @@
     </div>
   </div>
 
-  <footer>MUNGDOL · SEOUL · POEM &amp; CALLIGRAPHY BY ONE HAND</footer>
+  <footer>
+    <div>MUNGDOL · SEOUL · POEM &amp; CALLIGRAPHY BY ONE HAND</div>
+    <div class="copyright-line">© 2026 MUNGDOL. All rights reserved.</div>
+    <p class="copyright-notice" data-i18n="cr_notice">이 사이트의 모든 작품 이미지, 시, 해설은 멍돌(MUNGDOL)에게 저작권이 있습니다. 저작권자의 사전 서면 동의 없이 복제, 전재, 배포, 2차적 저작물 작성 및 상업적 이용을 금합니다.</p>
+    <p class="copyright-notice" data-i18n="cr_share">출처(mungdol.github.io)를 명시한 SNS 공유는 환영합니다.</p>
+  </footer>
 </div>
 
 <div class="iab-overlay" id="iabOverlay" role="dialog" aria-modal="true">
@@ -215,7 +222,9 @@ const UI = {
       iab_title:"브라우저에서 열기", iab_msg:"지금 앱 안의 화면으로 보고 계셔서 시 낭송 등 일부 기능이 동작하지 않습니다. 크롬/사파리에서 열면 모든 기능을 사용할 수 있습니다.",
       iab_open_android:"크롬으로 열기", iab_open_ios:"Safari로 열기", iab_close:"그냥 볼게요",
       iab_copied:"주소가 복사되었습니다. Safari를 열고 주소창에 길게 눌러 붙여넣어 주세요.",
-      iab_manual:"자동 이동이 안 되면: 오른쪽 위 메뉴(⋮ 또는 공유 버튼)에서 '다른 브라우저로 열기'를 선택하세요."},
+      iab_manual:"자동 이동이 안 되면: 오른쪽 위 메뉴(⋮ 또는 공유 버튼)에서 '다른 브라우저로 열기'를 선택하세요.",
+      cr_notice:"이 사이트의 모든 작품 이미지, 시, 해설은 멍돌(MUNGDOL)에게 저작권이 있습니다. 저작권자의 사전 서면 동의 없이 복제, 전재, 배포, 2차적 저작물 작성 및 상업적 이용을 금합니다.",
+      cr_share:"출처(mungdol.github.io)를 명시한 SNS 공유는 환영합니다."},
   en:{site_tag:"One-of-a-kind writing, made with a single bamboo chopstick", back:"All works", listen:"Hear the poem",
       story_eyebrow:"The story of this work", tool_eyebrow:"Not a brush. A chopstick.",
       tool_body:"This was written not with a brush but with a single bamboo chopstick. A chopstick can't hold ink the way a brush does — the strokes run dry and split, and that rough texture is Mungdol's signature. The same character can never be written twice.",
@@ -227,7 +236,9 @@ const UI = {
       iab_title:"Open in Browser", iab_msg:"You are viewing this inside an app, so some features (like voice playback) won't work. Open in Chrome or Safari for the full experience.",
       iab_open_android:"Open in Chrome", iab_open_ios:"Open in Safari", iab_close:"Continue here",
       iab_copied:"The address has been copied. Open Safari and paste it into the address bar.",
-      iab_manual:"If it doesn't open automatically: tap the menu (⋮ or share icon) and choose 'Open in browser'."},
+      iab_manual:"If it doesn't open automatically: tap the menu (⋮ or share icon) and choose 'Open in browser'.",
+      cr_notice:"All artwork images, poems, and texts on this site are copyrighted by MUNGDOL. Reproduction, redistribution, modification, or commercial use without prior written permission is prohibited.",
+      cr_share:"Sharing on social media with credit (mungdol.github.io) is welcome."},
   zh:{site_tag:"用一根竹筷写下的、世上独一无二的文字", back:"全部作品", listen:"听诗朗读",
       story_eyebrow:"这幅作品的故事", tool_eyebrow:"不是毛笔，是筷子",
       tool_body:"这些字不是用毛笔，而是用一根竹筷写成的。筷子不像毛笔那样含墨，笔画会干涩、开裂——那粗粝的痕迹正是Mungdol作品独有的表情。同一个字，永远无法写出第二次。",
@@ -239,7 +250,9 @@ const UI = {
       iab_title:"在浏览器中打开", iab_msg:"您正在应用内浏览，部分功能（如语音朗读）无法使用。请在Chrome或Safari中打开以使用全部功能。",
       iab_open_android:"用Chrome打开", iab_open_ios:"用Safari打开", iab_close:"继续浏览",
       iab_copied:"网址已复制。请打开Safari，在地址栏长按粘贴。",
-      iab_manual:"如果无法自动跳转：请点击右上角菜单（⋮或分享按钮），选择\"在浏览器中打开\"。"},
+      iab_manual:"如果无法自动跳转：请点击右上角菜单（⋮或分享按钮），选择\"在浏览器中打开\"。",
+      cr_notice:"本网站所有作品图片、诗文及解说的著作权均归MUNGDOL所有。未经著作权人事先书面同意，禁止复制、转载、传播、改编及商业使用。",
+      cr_share:"欢迎注明出处（mungdol.github.io）后在社交媒体分享。"},
   ja:{site_tag:"一本の竹箸で書いた、世界に一つだけの文字", back:"作品一覧", listen:"詩の朗読を聞く",
       story_eyebrow:"この作品の物語", tool_eyebrow:"筆ではなく、箸",
       tool_body:"この文字は筆ではなく、一本の竹箸で書かれました。箸は筆のように墨を含めないため、線はかすれ、割れます — その荒々しい跡がモンドル作品だけの表情です。同じ文字は二度と書けません。",
@@ -251,7 +264,9 @@ const UI = {
       iab_title:"ブラウザで開く", iab_msg:"アプリ内の画面でご覧のため、詩の朗読など一部の機能が動作しません。Chrome/Safariで開くとすべての機能をご利用いただけます。",
       iab_open_android:"Chromeで開く", iab_open_ios:"Safariで開く", iab_close:"このまま見る",
       iab_copied:"アドレスをコピーしました。Safariを開き、アドレスバーに長押しで貼り付けてください。",
-      iab_manual:"自動で開かない場合：右上のメニュー（⋮または共有ボタン）から「他のブラウザで開く」を選択してください。"}
+      iab_manual:"自動で開かない場合：右上のメニュー（⋮または共有ボタン）から「他のブラウザで開く」を選択してください。",
+      cr_notice:"本サイトのすべての作品画像・詩・解説の著作権はMUNGDOL（モンドル）に帰属します。著作権者の事前の書面による同意なく、複製・転載・配布・改変および商業利用を禁じます。",
+      cr_share:"出典（mungdol.github.io）を明記したSNSでのシェアは歓迎します。"}
 };
 
 let lang = "ko";
@@ -265,9 +280,10 @@ const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>
 const buttons = document.querySelectorAll(".langbar button");
 
 /* ── 필터링 ── */
+const DATA = (typeof WORKS_DATA !== "undefined") ? WORKS_DATA : [];
 function filtered(){
   const q = query.trim().toLowerCase();
-  return WORKS_DATA.filter(w=>{
+  return DATA.filter(w=>{
     if(theme!=="all" && w.theme!==theme) return false;
     if(!q) return true;
     const hay = [w.ko.title, w.en.title, w.ja.title,
@@ -321,7 +337,7 @@ $("searchBox").addEventListener("input",e=>{
 
 /* ── 상세 ── */
 function renderDetail(){
-  const w = WORKS_DATA.find(x=>x.id===currentId);
+  const w = DATA.find(x=>x.id===currentId);
   if(!w) return;
   const L = w[lang];
   $("dImg").src = IMG_FULL(w.id); $("dImg").alt = L.title;
@@ -339,7 +355,7 @@ function renderDetail(){
   $("dTrans").style.display = (lang==="ko") ? "none" : "block";
   $("dStory").textContent = L.story;
 
-  const list = filtered().length ? filtered() : WORKS_DATA;
+  const list = filtered().length ? filtered() : DATA;
   const idx = list.findIndex(x=>x.id===currentId);
   const prev = list[(idx-1+list.length)%list.length];
   const next = list[(idx+1)%list.length];
@@ -378,9 +394,12 @@ function setLang(l){
   buttons.forEach(b=>b.classList.toggle("on", b.dataset.lang===l));
   document.body.classList.add("switching");
   setTimeout(()=>{
-    applyUI(); renderThemes(); renderGrid();
-    if(currentId) renderDetail();
-    document.body.classList.remove("switching");
+    try{
+      applyUI(); renderThemes(); renderGrid();
+      if(currentId) renderDetail();
+    }finally{
+      document.body.classList.remove("switching");
+    }
   },200);
 }
 buttons.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
@@ -389,7 +408,7 @@ buttons.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
 $("listenBtn").addEventListener("click",()=>{
   if(!currentId) return;
   if(!("speechSynthesis" in window)){ if(IAB) showIab(); else alert(UI[lang].tts_fail); return; }
-  const w = WORKS_DATA.find(x=>x.id===currentId);
+  const w = DATA.find(x=>x.id===currentId);
   const text = w.lines.map(l=>l[0]).join(", ");
 
   const speakNow = ()=>{
@@ -479,10 +498,10 @@ buttons.forEach(b=>b.classList.toggle("on", b.dataset.lang===lang));
 applyUI(); renderThemes(); renderGrid();
 
 const m = location.hash.match(/^#work-(\d{4})$/);
-if(m && WORKS_DATA.some(w=>w.id===m[1])) openWork(m[1]);
+if(m && DATA.some(w=>w.id===m[1])) openWork(m[1]);
 window.addEventListener("hashchange",()=>{
   const mm = location.hash.match(/^#work-(\d{4})$/);
-  if(mm && WORKS_DATA.some(w=>w.id===mm[1])) openWork(mm[1]);
+  if(mm && DATA.some(w=>w.id===mm[1])) openWork(mm[1]);
   else closeWork();
 });
 </script>
