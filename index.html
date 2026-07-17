@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUNGDOL — 죽필 캘리그라피</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F4EE; --paper-deep:#EFEAE0;
+    --ink:#1C1B18; --ink-soft:#4A4740;
+    --inju:#B8382E; --hairline:rgba(28,27,24,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important;transition:none!important} }
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',-apple-system,sans-serif;font-weight:300;line-height:1.75;letter-spacing:-0.01em}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+
+  .langbar{position:sticky;top:0;z-index:20;background:linear-gradient(var(--paper) 82%, rgba(247,244,238,0));padding:16px 0 20px;display:flex;justify-content:center;gap:6px}
+  .langbar button{font-family:inherit;font-size:13px;font-weight:500;letter-spacing:.08em;padding:7px 16px;border-radius:999px;cursor:pointer;border:1px solid var(--hairline);background:transparent;color:var(--ink-soft);transition:all .18s ease}
+  .langbar button:focus-visible{outline:2px solid var(--inju);outline-offset:2px}
+  .langbar button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .site-hero{text-align:center;padding:26px 0 10px}
+  .site-hero .brand{font-family:'Noto Serif KR',serif;font-weight:900;font-size:clamp(38px,8vw,58px);line-height:1.15;position:relative;display:inline-block}
+  .site-hero .brand .seal{position:absolute;right:-40px;top:2px;width:30px;height:30px;border-radius:6px;background:var(--inju);color:var(--paper);font-family:'Noto Serif KR',serif;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)}
+  .site-hero .tag{margin-top:10px;font-size:14.5px;color:var(--ink-soft)}
+  .site-hero .sub{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--inju);margin-top:14px;font-weight:500}
+
+  /* 검색 + 주제 필터 */
+  .controls{margin-top:26px;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .search{width:100%;max-width:420px;position:relative}
+  .search input{width:100%;font-family:inherit;font-size:15px;padding:11px 16px 11px 42px;border-radius:999px;border:1px solid var(--hairline);background:#fff;color:var(--ink)}
+  .search input:focus{outline:2px solid var(--inju);outline-offset:1px}
+  .search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:var(--ink-soft)}
+  .themes{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+  .themes button{font-family:inherit;font-size:13.5px;font-weight:500;padding:7px 15px;border-radius:999px;cursor:pointer;border:1px solid var(--hairline);background:#fff;color:var(--ink-soft);transition:all .15s}
+  .themes button:focus-visible{outline:2px solid var(--inju);outline-offset:2px}
+  .themes button.on{background:var(--inju);color:#fff;border-color:var(--inju)}
+  .count{font-size:13px;color:var(--ink-soft)}
+
+  .grid{margin-top:22px;display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  @media(min-width:640px){.grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}}
+  .card{cursor:pointer;border:none;background:transparent;padding:0;text-align:left;font-family:inherit;color:inherit}
+  .card:focus-visible{outline:2px solid var(--inju);outline-offset:4px;border-radius:8px}
+  .card .frame{background:#fff;border:1px solid var(--hairline);border-radius:8px;padding:8px;box-shadow:0 1px 3px rgba(28,27,24,.06);transition:transform .18s ease, box-shadow .18s ease}
+  .card:hover .frame{transform:translateY(-3px);box-shadow:0 8px 22px rgba(28,27,24,.12)}
+  .card img{width:100%;aspect-ratio:32/45;object-fit:cover;display:block;border-radius:4px;background:var(--paper-deep)}
+  .card .t{margin-top:9px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:14px;line-height:1.45;color:var(--ink)}
+  .card .no{font-size:11px;letter-spacing:.2em;color:var(--inju);font-weight:500}
+  .empty{margin-top:40px;text-align:center;color:var(--ink-soft)}
+
+  /* 페이지네이션 */
+  .pager{margin-top:36px;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
+  .pager button{font-family:inherit;font-size:14px;font-weight:500;padding:8px 16px;border-radius:8px;cursor:pointer;border:1px solid var(--hairline);background:#fff;color:var(--ink)}
+  .pager button:disabled{opacity:.35;cursor:default}
+  .pager button:focus-visible{outline:2px solid var(--inju);outline-offset:2px}
+  .pager .pageinfo{font-size:13.5px;color:var(--ink-soft)}
+
+  /* 상세 */
+  .detail{display:none}
+  body.detail-open .grid-view{display:none}
+  body.detail-open .detail{display:block;max-width:520px;margin:0 auto}
+  .back{display:inline-flex;align-items:center;gap:8px;margin:6px 0 18px;background:transparent;border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-soft);padding:6px 2px}
+  .back:hover{color:var(--ink)}
+  .back:focus-visible{outline:2px solid var(--inju);outline-offset:2px}
+  .art-frame{background:#fff;border:1px solid var(--hairline);border-radius:12px;padding:14px;box-shadow:0 2px 10px rgba(28,27,24,.07)}
+  .art-frame img{width:100%;display:block;border-radius:6px;min-height:200px;background:var(--paper-deep)}
+  .d-no{margin-top:26px;font-size:12px;letter-spacing:.28em;color:var(--inju);font-weight:500;text-transform:uppercase;display:flex;gap:14px;align-items:center}
+  .d-no .theme-chip{font-size:11px;letter-spacing:.1em;border:1px solid var(--inju);border-radius:999px;padding:2px 10px}
+  .d-title{font-family:'Noto Serif KR',serif;font-weight:900;font-size:clamp(24px,6vw,32px);line-height:1.35;margin-top:6px}
+  .d-poem{margin-top:18px;padding:22px 24px;background:var(--paper-deep);border-radius:14px}
+  .poem-line + .poem-line{margin-top:14px}
+  .poem-line .k{font-family:'Noto Serif KR',serif;font-size:18px;line-height:1.6;font-weight:600}
+  .poem-line .r{font-size:13px;letter-spacing:.04em;color:var(--inju);font-weight:400;margin-top:1px}
+  .rom-note{margin-top:14px;font-size:11.5px;color:var(--ink-soft);opacity:.75}
+  .d-trans{margin-top:14px;font-size:15px;color:var(--ink-soft);white-space:pre-line;font-style:italic}
+  .d-section{padding:34px 0 0}
+  .eyebrow{font-size:12px;letter-spacing:.28em;font-weight:500;color:var(--inju);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--hairline)}
+  .d-section p{font-size:15px;color:var(--ink-soft)}
+  .listen{margin-top:18px;display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:14px;font-weight:500;color:var(--inju);background:transparent;cursor:pointer;border:1px solid var(--inju);border-radius:999px;padding:10px 22px;transition:all .18s ease}
+  .listen:hover{background:var(--inju);color:var(--paper)}
+  .listen:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .listen svg{width:15px;height:15px;fill:currentColor}
+  .nav-works{margin-top:44px;display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--hairline);padding-top:22px}
+  .nav-works button{background:transparent;border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-soft);padding:6px 2px;max-width:45%;text-align:inherit}
+  .nav-works button:hover{color:var(--ink)}
+  .nav-works button:focus-visible{outline:2px solid var(--inju);outline-offset:2px}
+
+  footer{margin-top:56px;text-align:center;font-size:11.5px;letter-spacing:.18em;color:var(--ink-soft);opacity:.7}
+  [data-i18n]{transition:opacity .2s ease}
+  body.switching [data-i18n]{opacity:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="langbar" aria-label="Language">
+    <button data-lang="ko" class="on">한국어</button>
+    <button data-lang="en">English</button>
+    <button data-lang="zh">中文</button>
+    <button data-lang="ja">日本語</button>
+  </nav>
+
+  <!-- ══ 그리드 뷰 ══ -->
+  <div class="grid-view">
+    <header class="site-hero">
+      <div class="brand">멍돌<span class="seal" aria-hidden="true">멍</span></div>
+      <div class="tag" data-i18n="site_tag">대나무 젓가락 한 자루로 쓴, 세상에 하나뿐인 글씨</div>
+      <div class="sub">MUNGDOL · BAMBOO-CHOPSTICK CALLIGRAPHY</div>
+    </header>
+
+    <div class="controls">
+      <div class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+        <input type="search" id="searchBox" placeholder="작품 검색">
+      </div>
+      <div class="themes" id="themeBar"></div>
+      <div class="count" id="countInfo"></div>
+    </div>
+
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none" data-i18n="empty">검색 결과가 없습니다.</div>
+
+    <div class="pager" id="pager">
+      <button id="pgPrev"></button>
+      <span class="pageinfo" id="pgInfo"></span>
+      <button id="pgNext"></button>
+    </div>
+  </div>
+
+  <!-- ══ 상세 뷰 ══ -->
+  <div class="detail" id="detail">
+    <button class="back" id="backBtn">←&nbsp;<span data-i18n="back">전체 작품</span></button>
+    <div class="art-frame"><img id="dImg" src="" alt=""></div>
+    <div class="d-no"><span id="dNo"></span><span class="theme-chip" id="dTheme"></span></div>
+    <h1 class="d-title" id="dTitle"></h1>
+    <div class="d-poem" id="dPoem"></div>
+    <div class="d-trans" id="dTrans"></div>
+    <button class="listen" id="listenBtn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+      <span data-i18n="listen">시 낭송 듣기</span>
+    </button>
+
+    <div class="d-section">
+      <div class="eyebrow" data-i18n="story_eyebrow">이 작품의 이야기</div>
+      <p id="dStory"></p>
+    </div>
+    <div class="d-section">
+      <div class="eyebrow" data-i18n="tool_eyebrow">붓이 아니라, 젓가락</div>
+      <p data-i18n="tool_body">이 글씨는 붓이 아니라 대나무 젓가락 한 자루로 썼습니다. 젓가락은 먹을 머금지 못해 획이 마르고 갈라집니다 — 그 거친 흔적이 멍돌 작품만의 표정입니다. 같은 글자는 두 번 쓸 수 없습니다.</p>
+    </div>
+    <div class="d-section">
+      <div class="eyebrow" data-i18n="artist_eyebrow">작가</div>
+      <p data-i18n="artist_body">멍돌은 시를 쓰고, 그 시를 젓가락으로 다시 씁니다. 이 페이지의 글과 글씨는 모두 한 사람의 것입니다.</p>
+    </div>
+
+    <div class="nav-works">
+      <button id="prevBtn"></button>
+      <button id="nextBtn" style="text-align:right"></button>
+    </div>
+  </div>
+
+  <footer>MUNGDOL · SEOUL · POEM &amp; CALLIGRAPHY BY ONE HAND</footer>
+</div>
+
+<script src="works.js"></script>
+<script>
+const PER_PAGE = 24;
+const IMG_FULL = id => `images/full/${id}.jpg`;
+const IMG_THUMB = id => `images/thumb/${id}.jpg`;
+
+const THEMES = {
+  all:{ko:"전체",en:"All",zh:"全部",ja:"すべて"},
+  life:{ko:"삶",en:"Life",zh:"人生",ja:"人生"},
+  love:{ko:"사랑",en:"Love",zh:"爱",ja:"愛"},
+  hope:{ko:"희망",en:"Hope",zh:"希望",ja:"希望"},
+  comfort:{ko:"위로",en:"Comfort",zh:"治愈",ja:"癒し"},
+  daily:{ko:"일상",en:"Everyday",zh:"日常",ja:"日常"},
+  dharma:{ko:"불교·명상",en:"Dharma",zh:"佛教·冥想",ja:"仏教・瞑想"},
+};
+
+const UI = {
+  ko:{site_tag:"대나무 젓가락 한 자루로 쓴, 세상에 하나뿐인 글씨", back:"전체 작품", listen:"시 낭송 듣기",
+      story_eyebrow:"이 작품의 이야기", tool_eyebrow:"붓이 아니라, 젓가락",
+      tool_body:"이 글씨는 붓이 아니라 대나무 젓가락 한 자루로 썼습니다. 젓가락은 먹을 머금지 못해 획이 마르고 갈라집니다 — 그 거친 흔적이 멍돌 작품만의 표정입니다. 같은 글자는 두 번 쓸 수 없습니다.",
+      artist_eyebrow:"작가", artist_body:"멍돌은 시를 쓰고, 그 시를 젓가락으로 다시 씁니다. 이 페이지의 글과 글씨는 모두 한 사람의 것입니다.",
+      work:"작품", prev:"← 이전", next:"다음 →", rom_note:"* 붉은 글씨는 한국어 발음의 로마자 표기입니다.",
+      search_ph:"작품 검색 (제목·시구)", empty:"검색 결과가 없습니다.", count:(n)=>`${n}개의 작품`,
+      page:(a,b)=>`${a} / ${b} 페이지`, pgPrev:"← 이전", pgNext:"다음 →"},
+  en:{site_tag:"One-of-a-kind writing, made with a single bamboo chopstick", back:"All works", listen:"Hear the poem",
+      story_eyebrow:"The story of this work", tool_eyebrow:"Not a brush. A chopstick.",
+      tool_body:"This was written not with a brush but with a single bamboo chopstick. A chopstick can't hold ink the way a brush does — the strokes run dry and split, and that rough texture is Mungdol's signature. The same character can never be written twice.",
+      artist_eyebrow:"The artist", artist_body:"Mungdol writes the poem, then writes it again with a chopstick. Both the words and the calligraphy on this page come from one hand.",
+      work:"Work", prev:"← Prev", next:"Next →", rom_note:"* The red text is the Korean pronunciation — try reading it aloud.",
+      search_ph:"Search works", empty:"No works found.", count:(n)=>`${n} works`,
+      page:(a,b)=>`Page ${a} of ${b}`, pgPrev:"← Prev", pgNext:"Next →"},
+  zh:{site_tag:"用一根竹筷写下的、世上独一无二的文字", back:"全部作品", listen:"听诗朗读",
+      story_eyebrow:"这幅作品的故事", tool_eyebrow:"不是毛笔，是筷子",
+      tool_body:"这些字不是用毛笔，而是用一根竹筷写成的。筷子不像毛笔那样含墨，笔画会干涩、开裂——那粗粝的痕迹正是Mungdol作品独有的表情。同一个字，永远无法写出第二次。",
+      artist_eyebrow:"作家", artist_body:"Mungdol写下诗，再用筷子把诗写一遍。这一页上的文字与书法，都出自同一人之手。",
+      work:"作品", prev:"← 上一幅", next:"下一幅 →", rom_note:"* 红色文字是韩语发音的罗马字标注，试着读出声来。",
+      search_ph:"搜索作品", empty:"未找到作品。", count:(n)=>`${n}件作品`,
+      page:(a,b)=>`第 ${a} / ${b} 页`, pgPrev:"← 上一页", pgNext:"下一页 →"},
+  ja:{site_tag:"一本の竹箸で書いた、世界に一つだけの文字", back:"作品一覧", listen:"詩の朗読を聞く",
+      story_eyebrow:"この作品の物語", tool_eyebrow:"筆ではなく、箸",
+      tool_body:"この文字は筆ではなく、一本の竹箸で書かれました。箸は筆のように墨を含めないため、線はかすれ、割れます — その荒々しい跡がモンドル作品だけの表情です。同じ文字は二度と書けません。",
+      artist_eyebrow:"作家", artist_body:"モンドルは詩を書き、その詩を箸で再び書きます。このページの言葉と文字は、すべて一人の手によるものです。",
+      work:"作品", prev:"← 前へ", next:"次へ →", rom_note:"* 赤い文字は韓国語の発音（ローマ字）です。声に出して読んでみてください。",
+      search_ph:"作品を検索", empty:"作品が見つかりません。", count:(n)=>`${n}点の作品`,
+      page:(a,b)=>`${a} / ${b} ページ`, pgPrev:"← 前へ", pgNext:"次へ →"}
+};
+
+let lang = "ko";
+let theme = "all";
+let query = "";
+let page = 1;
+let currentId = null;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const buttons = document.querySelectorAll(".langbar button");
+
+/* ── 필터링 ── */
+function filtered(){
+  const q = query.trim().toLowerCase();
+  return WORKS_DATA.filter(w=>{
+    if(theme!=="all" && w.theme!==theme) return false;
+    if(!q) return true;
+    const hay = [w.ko.title, w.en.title, w.ja.title,
+                 ...w.lines.map(l=>l[0]), ...w.lines.map(l=>l[1])].join(" ").toLowerCase();
+    return hay.includes(q);
+  });
+}
+
+/* ── 주제 필터 바 ── */
+function renderThemes(){
+  $("themeBar").innerHTML = Object.keys(THEMES).map(k=>
+    `<button data-theme="${k}" class="${k===theme?"on":""}">${THEMES[k][lang]}</button>`).join("");
+  $("themeBar").querySelectorAll("button").forEach(b=>
+    b.addEventListener("click",()=>{ theme=b.dataset.theme; page=1; renderThemes(); renderGrid(); }));
+}
+
+/* ── 그리드 + 페이지네이션 ── */
+function renderGrid(){
+  const list = filtered();
+  const pages = Math.max(1, Math.ceil(list.length/PER_PAGE));
+  page = Math.min(page, pages);
+  const slice = list.slice((page-1)*PER_PAGE, page*PER_PAGE);
+
+  $("countInfo").textContent = UI[lang].count(list.length);
+  $("empty").style.display = list.length ? "none":"block";
+  $("grid").innerHTML = slice.map(w=>`
+    <button class="card" data-id="${w.id}" aria-label="${esc(w[lang].title)}">
+      <div class="frame"><img src="${IMG_THUMB(w.id)}" alt="${esc(w[lang].title)}" loading="lazy"></div>
+      <div class="no">No.${w.id}</div>
+      <div class="t">${esc(w[lang].title)}</div>
+    </button>`).join("");
+  $("grid").querySelectorAll(".card").forEach(c=>
+    c.addEventListener("click",()=>openWork(c.dataset.id)));
+
+  $("pgInfo").textContent = UI[lang].page(page, pages);
+  $("pgPrev").textContent = UI[lang].pgPrev;
+  $("pgNext").textContent = UI[lang].pgNext;
+  $("pgPrev").disabled = page<=1;
+  $("pgNext").disabled = page>=pages;
+  $("pager").style.display = pages>1 ? "flex":"none";
+}
+$("pgPrev").addEventListener("click",()=>{ page--; renderGrid(); window.scrollTo({top:0}); });
+$("pgNext").addEventListener("click",()=>{ page++; renderGrid(); window.scrollTo({top:0}); });
+
+/* ── 검색 ── */
+let searchTimer;
+$("searchBox").addEventListener("input",e=>{
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(()=>{ query=e.target.value; page=1; renderGrid(); }, 200);
+});
+
+/* ── 상세 ── */
+function renderDetail(){
+  const w = WORKS_DATA.find(x=>x.id===currentId);
+  if(!w) return;
+  const L = w[lang];
+  $("dImg").src = IMG_FULL(w.id); $("dImg").alt = L.title;
+  $("dNo").textContent = `${UI[lang].work} No.${w.id}`;
+  $("dTheme").textContent = (THEMES[w.theme]||THEMES.all)[lang];
+  $("dTitle").textContent = L.title;
+  $("dPoem").innerHTML =
+    w.lines.map(([k,r])=>`
+      <div class="poem-line">
+        <div class="k">${esc(k)}</div>
+        ${r?`<div class="r">${esc(r)}</div>`:""}
+      </div>`).join("")
+    + `<div class="rom-note">${esc(UI[lang].rom_note)}</div>`;
+  $("dTrans").textContent = (lang==="ko") ? "" : L.trans;
+  $("dTrans").style.display = (lang==="ko") ? "none" : "block";
+  $("dStory").textContent = L.story;
+
+  const list = filtered().length ? filtered() : WORKS_DATA;
+  const idx = list.findIndex(x=>x.id===currentId);
+  const prev = list[(idx-1+list.length)%list.length];
+  const next = list[(idx+1)%list.length];
+  $("prevBtn").textContent = `${UI[lang].prev}  ${prev[lang].title}`;
+  $("nextBtn").textContent = `${next[lang].title}  ${UI[lang].next}`;
+  $("prevBtn").onclick = ()=>openWork(prev.id);
+  $("nextBtn").onclick = ()=>openWork(next.id);
+}
+
+function openWork(id){
+  currentId = id;
+  document.body.classList.add("detail-open");
+  renderDetail();
+  location.hash = "work-"+id;
+  window.scrollTo({top:0});
+}
+function closeWork(){
+  currentId = null;
+  document.body.classList.remove("detail-open");
+  history.replaceState(null,"",location.pathname + location.search);
+  window.scrollTo({top:0});
+}
+$("backBtn").addEventListener("click", closeWork);
+
+/* ── 언어 ── */
+function applyUI(){
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.dataset.i18n;
+    if(typeof UI[lang][k]==="string") el.textContent = UI[lang][k];
+  });
+  $("searchBox").placeholder = UI[lang].search_ph;
+}
+function setLang(l){
+  lang = l;
+  document.documentElement.lang = l;
+  buttons.forEach(b=>b.classList.toggle("on", b.dataset.lang===l));
+  document.body.classList.add("switching");
+  setTimeout(()=>{
+    applyUI(); renderThemes(); renderGrid();
+    if(currentId) renderDetail();
+    document.body.classList.remove("switching");
+  },200);
+}
+buttons.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+
+/* ── 낭송 ── */
+$("listenBtn").addEventListener("click",()=>{
+  if(!("speechSynthesis" in window) || !currentId) return;
+  const w = WORKS_DATA.find(x=>x.id===currentId);
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(w.lines.map(l=>l[0]).join(", "));
+  u.lang="ko-KR"; u.rate=0.82;
+  speechSynthesis.speak(u);
+});
+
+/* ── 초기화 ── */
+const nav = (navigator.language||"ko").slice(0,2);
+if(nav==="en"||nav==="zh"||nav==="ja") lang = nav;
+document.documentElement.lang = lang;
+buttons.forEach(b=>b.classList.toggle("on", b.dataset.lang===lang));
+applyUI(); renderThemes(); renderGrid();
+
+const m = location.hash.match(/^#work-(\d{4})$/);
+if(m && WORKS_DATA.some(w=>w.id===m[1])) openWork(m[1]);
+window.addEventListener("hashchange",()=>{
+  const mm = location.hash.match(/^#work-(\d{4})$/);
+  if(mm && WORKS_DATA.some(w=>w.id===mm[1])) openWork(mm[1]);
+  else closeWork();
+});
+</script>
+</body>
+</html>
