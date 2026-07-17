@@ -487,7 +487,7 @@ buttons.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
 /* ── 낭송 ── */
 /* ══ 방문 리뷰 ══
    REVIEWS_API에 Apps Script 웹앱 주소를 넣으면 활성화됩니다. 비워두면 리뷰 섹션이 숨겨집니다. */
-const REVIEWS_API = "";
+const REVIEWS_API = "https://script.google.com/macros/s/AKfycbzm339TxsApCpMoITsesjfEi-NhhH7oNAD5dDj3Iz5jgYOpKK86d8Z3RFZXCWS_ujxa/exec";
 
 function rvApplyText(){
   $("rvName").placeholder = UI[lang].rv_name_ph;
