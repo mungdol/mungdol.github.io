@@ -108,6 +108,23 @@
   .nav-works button:hover{color:var(--ink)}
   .nav-works button:focus-visible{outline:2px solid var(--inju);outline-offset:2px}
 
+  /* ── 방문 리뷰 ── */
+  .rv-count{font-size:11px;letter-spacing:.1em;color:var(--ink-soft)}
+  .rv-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+  .rv-item{background:#fff;border:1px solid var(--hairline);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-s)}
+  .rv-item .rv-head{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--ink-soft);margin-bottom:5px}
+  .rv-item .rv-name{font-weight:600;color:var(--ink)}
+  .rv-item .rv-body{font-size:14.5px;line-height:1.7;word-break:break-word;white-space:pre-line}
+  .rv-empty,.rv-loading{font-size:13.5px;color:var(--ink-soft);padding:6px 2px}
+  .rv-form{position:relative;display:flex;flex-direction:column;gap:9px}
+  .rv-form input[type=text],.rv-form textarea{width:100%;font-family:inherit;font-size:14.5px;padding:11px 14px;border:1px solid var(--hairline);border-radius:10px;background:#fff;color:var(--ink)}
+  .rv-form textarea{min-height:84px;resize:vertical}
+  .rv-form input:focus,.rv-form textarea:focus{outline:2px solid var(--inju);outline-offset:1px}
+  .rv-submit{align-self:flex-start;font-family:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border:none;border-radius:999px;padding:11px 26px;cursor:pointer;transition:all .25s var(--ease)}
+  .rv-submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-m)}
+  .rv-submit:disabled{opacity:.5;cursor:default}
+  .rv-note{font-size:12px;color:var(--ink-soft);min-height:18px}
+
   footer{margin-top:70px;text-align:center;font-size:11.5px;letter-spacing:.18em;color:var(--ink-soft);opacity:.75}
   footer .copyright-line{margin-top:14px;letter-spacing:.06em;font-weight:500}
   footer .copyright-notice{margin:8px auto 0;max-width:460px;font-size:11px;letter-spacing:0;line-height:1.7;opacity:.9}
@@ -191,6 +208,18 @@
       <p data-i18n="artist_body">멍돌은 시를 쓰고, 그 시를 젓가락으로 다시 씁니다. 이 페이지의 글과 글씨는 모두 한 사람의 것입니다.</p>
     </div>
 
+    <div class="d-section" id="reviewsSection" style="display:none">
+      <div class="eyebrow"><span data-i18n="rv_eyebrow">방문 리뷰</span><span class="rv-count" id="rvCount"></span></div>
+      <div id="rvList" class="rv-list"></div>
+      <form id="rvForm" class="rv-form">
+        <input type="text" id="rvName" maxlength="30">
+        <textarea id="rvMsg" maxlength="500" required></textarea>
+        <input type="text" id="rvWeb" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <button type="submit" class="rv-submit" id="rvSubmit"></button>
+        <div class="rv-note" id="rvNote"></div>
+      </form>
+    </div>
+
     <div class="nav-works">
       <button id="prevBtn"></button>
       <button id="nextBtn" style="text-align:right"></button>
@@ -245,7 +274,12 @@ const UI = {
       iab_copied:"주소가 복사되었습니다. Safari를 열고 주소창에 길게 눌러 붙여넣어 주세요.",
       iab_manual:"자동 이동이 안 되면: 오른쪽 위 메뉴(⋮ 또는 공유 버튼)에서 '다른 브라우저로 열기'를 선택하세요.",
       cr_notice:"이 사이트의 모든 작품 이미지, 시, 해설은 멍돌(MUNGDOL)에게 저작권이 있습니다. 저작권자의 사전 서면 동의 없이 복제, 전재, 배포, 2차적 저작물 작성 및 상업적 이용을 금합니다.",
-      cr_share:"출처(mungdol.github.io)를 명시한 SNS 공유는 환영합니다."},
+      cr_share:"출처(mungdol.github.io)를 명시한 SNS 공유는 환영합니다.",
+      rv_eyebrow:"방문 리뷰", rv_total:(n)=>`전체 ${n}개 · 최신 10개 표시`,
+      rv_name_ph:"이름 (선택)", rv_msg_ph:"이 작품에 대한 한마디를 남겨주세요",
+      rv_submit:"리뷰 남기기", rv_sending:"등록 중…", rv_thanks:"소중한 리뷰 감사합니다!",
+      rv_empty:"아직 리뷰가 없습니다. 첫 리뷰를 남겨주세요.", rv_loading:"리뷰 불러오는 중…",
+      rv_error:"잠시 후 다시 시도해 주세요.", rv_anon:"방문자"},
   en:{site_tag:"One-of-a-kind writing, made with a single bamboo chopstick", back:"All works", listen:"Hear the poem",
       story_eyebrow:"The story of this work", tool_eyebrow:"Not a brush. A chopstick.",
       tool_body:"This was written not with a brush but with a single bamboo chopstick. A chopstick can't hold ink the way a brush does — the strokes run dry and split, and that rough texture is Mungdol's signature. The same character can never be written twice.",
@@ -259,7 +293,12 @@ const UI = {
       iab_copied:"The address has been copied. Open Safari and paste it into the address bar.",
       iab_manual:"If it doesn't open automatically: tap the menu (⋮ or share icon) and choose 'Open in browser'.",
       cr_notice:"All artwork images, poems, and texts on this site are copyrighted by MUNGDOL. Reproduction, redistribution, modification, or commercial use without prior written permission is prohibited.",
-      cr_share:"Sharing on social media with credit (mungdol.github.io) is welcome."},
+      cr_share:"Sharing on social media with credit (mungdol.github.io) is welcome.",
+      rv_eyebrow:"Visitor Reviews", rv_total:(n)=>`${n} total · showing latest 10`,
+      rv_name_ph:"Name (optional)", rv_msg_ph:"Leave a few words about this work",
+      rv_submit:"Post review", rv_sending:"Posting…", rv_thanks:"Thank you for your review!",
+      rv_empty:"No reviews yet. Be the first!", rv_loading:"Loading reviews…",
+      rv_error:"Please try again in a moment.", rv_anon:"Visitor"},
   zh:{site_tag:"用一根竹筷写下的、世上独一无二的文字", back:"全部作品", listen:"听诗朗读",
       story_eyebrow:"这幅作品的故事", tool_eyebrow:"不是毛笔，是筷子",
       tool_body:"这些字不是用毛笔，而是用一根竹筷写成的。筷子不像毛笔那样含墨，笔画会干涩、开裂——那粗粝的痕迹正是Mungdol作品独有的表情。同一个字，永远无法写出第二次。",
@@ -273,7 +312,12 @@ const UI = {
       iab_copied:"网址已复制。请打开Safari，在地址栏长按粘贴。",
       iab_manual:"如果无法自动跳转：请点击右上角菜单（⋮或分享按钮），选择\"在浏览器中打开\"。",
       cr_notice:"本网站所有作品图片、诗文及解说的著作权均归MUNGDOL所有。未经著作权人事先书面同意，禁止复制、转载、传播、改编及商业使用。",
-      cr_share:"欢迎注明出处（mungdol.github.io）后在社交媒体分享。"},
+      cr_share:"欢迎注明出处（mungdol.github.io）后在社交媒体分享。",
+      rv_eyebrow:"访客评论", rv_total:(n)=>`共${n}条 · 显示最新10条`,
+      rv_name_ph:"姓名（可选）", rv_msg_ph:"请留下您对这幅作品的感想",
+      rv_submit:"发表评论", rv_sending:"发送中…", rv_thanks:"感谢您的评论！",
+      rv_empty:"还没有评论，来留下第一条吧。", rv_loading:"正在加载评论…",
+      rv_error:"请稍后再试。", rv_anon:"访客"},
   ja:{site_tag:"一本の竹箸で書いた、世界に一つだけの文字", back:"作品一覧", listen:"詩の朗読を聞く",
       story_eyebrow:"この作品の物語", tool_eyebrow:"筆ではなく、箸",
       tool_body:"この文字は筆ではなく、一本の竹箸で書かれました。箸は筆のように墨を含めないため、線はかすれ、割れます — その荒々しい跡がモンドル作品だけの表情です。同じ文字は二度と書けません。",
@@ -287,7 +331,12 @@ const UI = {
       iab_copied:"アドレスをコピーしました。Safariを開き、アドレスバーに長押しで貼り付けてください。",
       iab_manual:"自動で開かない場合：右上のメニュー（⋮または共有ボタン）から「他のブラウザで開く」を選択してください。",
       cr_notice:"本サイトのすべての作品画像・詩・解説の著作権はMUNGDOL（モンドル）に帰属します。著作権者の事前の書面による同意なく、複製・転載・配布・改変および商業利用を禁じます。",
-      cr_share:"出典（mungdol.github.io）を明記したSNSでのシェアは歓迎します。"}
+      cr_share:"出典（mungdol.github.io）を明記したSNSでのシェアは歓迎します。",
+      rv_eyebrow:"訪問者レビュー", rv_total:(n)=>`全${n}件 · 最新10件を表示`,
+      rv_name_ph:"お名前（任意）", rv_msg_ph:"この作品への一言をお寄せください",
+      rv_submit:"レビューを投稿", rv_sending:"送信中…", rv_thanks:"レビューありがとうございます！",
+      rv_empty:"まだレビューがありません。最初の一言をどうぞ。", rv_loading:"レビューを読み込み中…",
+      rv_error:"しばらくしてからもう一度お試しください。", rv_anon:"訪問者"}
 };
 
 let lang = "ko";
@@ -401,6 +450,7 @@ function openWork(id){
   location.hash = "work-"+id;
   window.scrollTo({top:0});
   trackView("/work-"+id);
+  loadReviews(id);
 }
 function closeWork(){
   currentId = null;
@@ -426,7 +476,7 @@ function setLang(l){
   setTimeout(()=>{
     try{
       applyUI(); renderThemes(); renderGrid();
-      if(currentId) renderDetail();
+      if(currentId){ renderDetail(); loadReviews(currentId); }
     }finally{
       document.body.classList.remove("switching");
     }
@@ -435,6 +485,69 @@ function setLang(l){
 buttons.forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
 
 /* ── 낭송 ── */
+/* ══ 방문 리뷰 ══
+   REVIEWS_API에 Apps Script 웹앱 주소를 넣으면 활성화됩니다. 비워두면 리뷰 섹션이 숨겨집니다. */
+const REVIEWS_API = "";
+
+function rvApplyText(){
+  $("rvName").placeholder = UI[lang].rv_name_ph;
+  $("rvMsg").placeholder = UI[lang].rv_msg_ph;
+  $("rvSubmit").textContent = UI[lang].rv_submit;
+}
+function rvEsc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function rvDate(t){
+  try{ const d = new Date(t); return d.toLocaleDateString(lang==="ko"?"ko-KR":lang==="ja"?"ja-JP":lang==="zh"?"zh-CN":"en-US",{year:"numeric",month:"short",day:"numeric"}); }
+  catch(e){ return ""; }
+}
+async function loadReviews(id){
+  if(!REVIEWS_API){ $("reviewsSection").style.display="none"; return; }
+  $("reviewsSection").style.display="block";
+  rvApplyText();
+  $("rvCount").textContent = "";
+  $("rvNote").textContent = "";
+  $("rvList").innerHTML = `<div class="rv-loading">${rvEsc(UI[lang].rv_loading)}</div>`;
+  try{
+    const r = await fetch(REVIEWS_API + "?work=" + id);
+    const d = await r.json();
+    if(currentId !== id) return; // 다른 작품으로 이동했으면 무시
+    $("rvCount").textContent = UI[lang].rv_total(d.total||0);
+    if(!d.items || !d.items.length){
+      $("rvList").innerHTML = `<div class="rv-empty">${rvEsc(UI[lang].rv_empty)}</div>`;
+      return;
+    }
+    $("rvList").innerHTML = d.items.map(it=>`
+      <div class="rv-item">
+        <div class="rv-head"><span class="rv-name">${rvEsc(it.n||UI[lang].rv_anon)}</span><span>${rvEsc(rvDate(it.t))}</span></div>
+        <div class="rv-body">${rvEsc(it.m||"")}</div>
+      </div>`).join("");
+  }catch(e){
+    $("rvList").innerHTML = `<div class="rv-empty">${rvEsc(UI[lang].rv_error)}</div>`;
+  }
+}
+$("rvForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  if(!REVIEWS_API || !currentId) return;
+  const msg = $("rvMsg").value.trim();
+  if(!msg) return;
+  $("rvSubmit").disabled = true;
+  $("rvSubmit").textContent = UI[lang].rv_sending;
+  try{
+    const r = await fetch(REVIEWS_API, {
+      method:"POST",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify({ work: currentId, name: $("rvName").value.trim().slice(0,30), msg: msg.slice(0,500), web: $("rvWeb").value })
+    });
+    const d = await r.json();
+    if(d && d.ok){
+      $("rvMsg").value = "";
+      $("rvNote").textContent = UI[lang].rv_thanks;
+      loadReviews(currentId);
+    }else{ $("rvNote").textContent = UI[lang].rv_error; }
+  }catch(e){ $("rvNote").textContent = UI[lang].rv_error; }
+  $("rvSubmit").disabled = false;
+  $("rvSubmit").textContent = UI[lang].rv_submit;
+});
+
 $("listenBtn").addEventListener("click",()=>{
   if(!currentId) return;
   if(!("speechSynthesis" in window)){ if(IAB) showIab(); else alert(UI[lang].tts_fail); return; }
