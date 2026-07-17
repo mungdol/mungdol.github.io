@@ -365,12 +365,21 @@ function renderDetail(){
   $("nextBtn").onclick = ()=>openWork(next.id);
 }
 
+function trackView(path){
+  /* 방문 카운터에 작품별 조회 신호 전송 (카운터 미로딩/차단 시 조용히 무시) */
+  try{
+    if(window.goatcounter && window.goatcounter.count){
+      window.goatcounter.count({ path: path });
+    }
+  }catch(e){}
+}
 function openWork(id){
   currentId = id;
   document.body.classList.add("detail-open");
   renderDetail();
   location.hash = "work-"+id;
   window.scrollTo({top:0});
+  trackView("/work-"+id);
 }
 function closeWork(){
   currentId = null;
@@ -505,5 +514,6 @@ window.addEventListener("hashchange",()=>{
   else closeWork();
 });
 </script>
+<script data-goatcounter="https://mungdol.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
