@@ -21,7 +21,8 @@
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important;transition:none!important} }
   body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',-apple-system,sans-serif;font-weight:300;line-height:1.75;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased}
   .wrap{max-width:1180px;margin:0 auto;padding:0 22px 0}
-  img{-webkit-user-drag:none}
+  img,video{-webkit-user-drag:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+  .card img,.art-frame img,.d-photo,.ab-book,.brand-logo,.d-video{pointer-events:none}
 
   /* ── 상단 언어바: 반투명 블러 ── */
   .langbar{position:sticky;top:0;z-index:20;background:rgba(248,246,241,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:14px 0;display:flex;justify-content:center;gap:6px;border-bottom:1px solid var(--hairline)}
@@ -782,6 +783,12 @@ if(gotoParam && /^work-\d{4}$/.test(gotoParam)){
 }
 
 /* ── 초기화 ── */
+/* 이미지·영상 우클릭 저장 차단 (감상 방해 없이 이미지에만 적용) */
+document.addEventListener("contextmenu", e => {
+  const t = e.target;
+  if(t && (t.tagName === "IMG" || t.tagName === "VIDEO")) e.preventDefault();
+});
+
 const nav = (navigator.language||"ko").slice(0,2);
 if(nav==="en"||nav==="zh"||nav==="ja") lang = nav;
 document.documentElement.lang = lang;
