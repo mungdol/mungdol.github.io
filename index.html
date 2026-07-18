@@ -68,7 +68,7 @@
   .card:hover .frame{transform:translateY(-6px);box-shadow:var(--shadow-m)}
   .card:hover img{transform:scale(1.035)}
   .card .no{margin-top:11px;font-size:10.5px;letter-spacing:.22em;color:var(--accent);font-weight:500}
-  .card .t{margin-top:2px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:15px;line-height:1.5;color:var(--ink);height:3em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .card .t{margin-top:2px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:15px;line-height:1.5;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .empty{margin-top:48px;text-align:center;color:var(--ink-soft)}
 
   /* ── 페이지네이션 ── */
@@ -127,6 +127,8 @@
   .rv-submit{align-self:flex-start;font-family:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border:none;border-radius:999px;padding:11px 26px;cursor:pointer;transition:all .25s var(--ease)}
   .rv-submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-m)}
   .rv-submit:disabled{opacity:.5;cursor:default}
+  .rv-consent{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.7;color:var(--ink-soft);cursor:pointer}
+  .rv-consent input{margin-top:3px;accent-color:var(--accent);flex:none}
   .rv-note{font-size:12px;color:var(--ink-soft);min-height:18px}
 
   .d-photo{width:100%;border-radius:12px;margin:4px 0 14px;box-shadow:var(--shadow-s);display:block}
@@ -238,8 +240,9 @@
       <div class="eyebrow"><span data-i18n="rv_eyebrow">방문 리뷰</span><span class="rv-count" id="rvCount"></span></div>
       <div id="rvList" class="rv-list"></div>
       <form id="rvForm" class="rv-form">
-        <input type="text" id="rvName" maxlength="30">
+        <input type="email" id="rvEmail" maxlength="60" autocomplete="email">
         <textarea id="rvMsg" maxlength="500" required></textarea>
+        <label class="rv-consent"><input type="checkbox" id="rvConsent"><span data-i18n="rv_consent"></span></label>
         <input type="text" id="rvWeb" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <button type="submit" class="rv-submit" id="rvSubmit"></button>
         <div class="rv-note" id="rvNote"></div>
@@ -340,7 +343,9 @@ const UI = {
       cr_notice:"이 사이트의 모든 작품 이미지, 시, 해설은 멍돌(MUNGDOL)에게 저작권이 있습니다. 저작권자의 사전 서면 동의 없이 복제, 전재, 배포, 2차적 저작물 작성 및 상업적 이용을 금합니다.",
       cr_share:"출처(mungdol.github.io)를 명시한 SNS 공유는 환영합니다.",
       rv_eyebrow:"방문 리뷰", rv_total:(n)=>`전체 ${n}개 · 최신 10개 표시`,
-      rv_name_ph:"이름 (선택)", rv_msg_ph:"이 작품에 대한 한마디를 남겨주세요",
+      rv_email_ph:"이메일 (예: name@example.com)",
+      rv_consent:"이메일은 리뷰 관리 목적으로만 수집·이용되며 제3자에게 제공되지 않습니다. 화면에는 일부가 가려져(예: ab***@…) 표시됩니다. 개인정보 수집·이용에 동의합니다.",
+      rv_consent_req:"개인정보 수집·이용에 동의해 주세요.", rv_email_bad:"이메일 주소를 확인해 주세요.", rv_msg_ph:"이 작품에 대한 한마디를 남겨주세요",
       rv_submit:"리뷰 남기기", rv_sending:"등록 중…", rv_thanks:"소중한 리뷰 감사합니다!",
       rv_empty:"아직 리뷰가 없습니다. 첫 리뷰를 남겨주세요.", rv_loading:"리뷰 불러오는 중…",
       rv_error:"잠시 후 다시 시도해 주세요.", rv_anon:"방문자",
@@ -373,7 +378,9 @@ const UI = {
       cr_notice:"All artwork images, poems, and texts on this site are copyrighted by MUNGDOL. Reproduction, redistribution, modification, or commercial use without prior written permission is prohibited.",
       cr_share:"Sharing on social media with credit (mungdol.github.io) is welcome.",
       rv_eyebrow:"Visitor Reviews", rv_total:(n)=>`${n} total · showing latest 10`,
-      rv_name_ph:"Name (optional)", rv_msg_ph:"Leave a few words about this work",
+      rv_email_ph:"Email (e.g. name@example.com)",
+      rv_consent:"Your email is collected only for review management and never shared with third parties. It is shown partially masked (e.g. ab***@…). I agree to this collection and use.",
+      rv_consent_req:"Please agree to the privacy notice.", rv_email_bad:"Please check your email address.", rv_msg_ph:"Leave a few words about this work",
       rv_submit:"Post review", rv_sending:"Posting…", rv_thanks:"Thank you for your review!",
       rv_empty:"No reviews yet. Be the first!", rv_loading:"Loading reviews…",
       rv_error:"Please try again in a moment.", rv_anon:"Visitor",
@@ -406,7 +413,9 @@ const UI = {
       cr_notice:"本网站所有作品图片、诗文及解说的著作权均归MUNGDOL所有。未经著作权人事先书面同意，禁止复制、转载、传播、改编及商业使用。",
       cr_share:"欢迎注明出处（mungdol.github.io）后在社交媒体分享。",
       rv_eyebrow:"访客评论", rv_total:(n)=>`共${n}条 · 显示最新10条`,
-      rv_name_ph:"姓名（可选）", rv_msg_ph:"请留下您对这幅作品的感想",
+      rv_email_ph:"电子邮箱（例：name@example.com）",
+      rv_consent:"您的邮箱仅用于评论管理，绝不提供给第三方。页面上将部分隐藏显示（例：ab***@…）。我同意上述个人信息的收集与使用。",
+      rv_consent_req:"请先同意个人信息使用条款。", rv_email_bad:"请确认您的邮箱地址。", rv_msg_ph:"请留下您对这幅作品的感想",
       rv_submit:"发表评论", rv_sending:"发送中…", rv_thanks:"感谢您的评论！",
       rv_empty:"还没有评论，来留下第一条吧。", rv_loading:"正在加载评论…",
       rv_error:"请稍后再试。", rv_anon:"访客",
@@ -439,7 +448,9 @@ const UI = {
       cr_notice:"本サイトのすべての作品画像・詩・解説の著作権はMUNGDOL（モンドル）に帰属します。著作権者の事前の書面による同意なく、複製・転載・配布・改変および商業利用を禁じます。",
       cr_share:"出典（mungdol.github.io）を明記したSNSでのシェアは歓迎します。",
       rv_eyebrow:"訪問者レビュー", rv_total:(n)=>`全${n}件 · 最新10件を表示`,
-      rv_name_ph:"お名前（任意）", rv_msg_ph:"この作品への一言をお寄せください",
+      rv_email_ph:"メールアドレス（例：name@example.com）",
+      rv_consent:"メールアドレスはレビュー管理の目的にのみ収集・利用され、第三者に提供されることはありません。画面には一部を伏せて（例：ab***@…）表示されます。個人情報の収集・利用に同意します。",
+      rv_consent_req:"個人情報の取り扱いに同意してください。", rv_email_bad:"メールアドレスをご確認ください。", rv_msg_ph:"この作品への一言をお寄せください",
       rv_submit:"レビューを投稿", rv_sending:"送信中…", rv_thanks:"レビューありがとうございます！",
       rv_empty:"まだレビューがありません。最初の一言をどうぞ。", rv_loading:"レビューを読み込み中…",
       rv_error:"しばらくしてからもう一度お試しください。", rv_anon:"訪問者",
@@ -639,7 +650,7 @@ $("carvingPhoto").src = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD
 const REVIEWS_API = "https://script.google.com/macros/s/AKfycbzm339TxsApCpMoITsesjfEi-NhhH7oNAD5dDj3Iz5jgYOpKK86d8Z3RFZXCWS_ujxa/exec";
 
 function rvApplyText(){
-  $("rvName").placeholder = UI[lang].rv_name_ph;
+  $("rvEmail").placeholder = UI[lang].rv_email_ph;
   $("rvMsg").placeholder = UI[lang].rv_msg_ph;
   $("rvSubmit").textContent = UI[lang].rv_submit;
 }
@@ -678,17 +689,20 @@ $("rvForm").addEventListener("submit", async e=>{
   if(!REVIEWS_API || !currentId) return;
   const msg = $("rvMsg").value.trim();
   if(!msg) return;
+  const email = $("rvEmail").value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ $("rvNote").textContent = UI[lang].rv_email_bad; return; }
+  if(!$("rvConsent").checked){ $("rvNote").textContent = UI[lang].rv_consent_req; return; }
   $("rvSubmit").disabled = true;
   $("rvSubmit").textContent = UI[lang].rv_sending;
   try{
     const r = await fetch(REVIEWS_API, {
       method:"POST",
       headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body: JSON.stringify({ work: currentId, name: $("rvName").value.trim().slice(0,30), msg: msg.slice(0,500), web: $("rvWeb").value })
+      body: JSON.stringify({ work: currentId, email: email.slice(0,60), msg: msg.slice(0,500), web: $("rvWeb").value })
     });
     const d = await r.json();
     if(d && d.ok){
-      $("rvMsg").value = "";
+      $("rvMsg").value = ""; $("rvEmail").value = ""; $("rvConsent").checked = false;
       $("rvNote").textContent = UI[lang].rv_thanks;
       loadReviews(currentId);
     }else{ $("rvNote").textContent = UI[lang].rv_error; }
