@@ -62,9 +62,8 @@
   @keyframes cardIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
   .card:nth-child(1){animation-delay:.02s}.card:nth-child(2){animation-delay:.07s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.17s}.card:nth-child(5){animation-delay:.22s}.card:nth-child(6){animation-delay:.27s}.card:nth-child(7){animation-delay:.32s}.card:nth-child(8){animation-delay:.37s}.card:nth-child(n+9){animation-delay:.42s}
   .card:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:12px}
-  .card .frame{border-radius:4px;overflow:hidden;background:#fff;padding:9px;border:1px solid rgba(23,22,19,.16);box-shadow:var(--shadow-s);aspect-ratio:5/7;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
-  .card .frame img{outline:1px solid rgba(23,22,19,.09);outline-offset:-1px}
-  .card img{width:100%;height:100%;object-fit:contain;background:#fff;display:block;transition:transform .6s var(--ease)}
+  .card .frame{border-radius:4px;overflow:hidden;background:#fff;position:relative;height:0;padding:0 0 140% 0;border:1px solid rgba(23,22,19,.16);box-shadow:var(--shadow-s);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .card .frame img{position:absolute;top:9px;left:9px;width:calc(100% - 18px);height:calc(100% - 18px);object-fit:contain;background:#fff;display:block;outline:1px solid rgba(23,22,19,.09);outline-offset:-1px;transition:transform .6s var(--ease)}
   .card:hover .frame{transform:translateY(-6px);box-shadow:var(--shadow-m)}
   .card:hover img{transform:scale(1.035)}
   .card .no{margin-top:11px;font-size:10.5px;letter-spacing:.22em;color:var(--accent);font-weight:500}
@@ -343,7 +342,7 @@ const UI = {
       cr_notice:"이 사이트의 모든 작품 이미지, 시, 해설은 멍돌(MUNGDOL)에게 저작권이 있습니다. 저작권자의 사전 서면 동의 없이 복제, 전재, 배포, 2차적 저작물 작성 및 상업적 이용을 금합니다.",
       cr_share:"출처(mungdol.github.io)를 명시한 SNS 공유는 환영합니다.",
       rv_eyebrow:"방문 리뷰", rv_total:(n)=>`전체 ${n}개 · 최신 10개 표시`,
-      rv_email_ph:"이메일 (예: name@example.com)",
+      rv_email_ph:"이메일 (예: ID@example.com)",
       rv_consent:"이메일은 리뷰 관리 목적으로만 수집·이용되며 제3자에게 제공되지 않습니다. 화면에는 일부가 가려져(예: ab***@…) 표시됩니다. 개인정보 수집·이용에 동의합니다.",
       rv_consent_req:"개인정보 수집·이용에 동의해 주세요.", rv_email_bad:"이메일 주소를 확인해 주세요.", rv_msg_ph:"이 작품에 대한 한마디를 남겨주세요",
       rv_submit:"리뷰 남기기", rv_sending:"등록 중…", rv_thanks:"소중한 리뷰 감사합니다!",
@@ -378,7 +377,7 @@ const UI = {
       cr_notice:"All artwork images, poems, and texts on this site are copyrighted by MUNGDOL. Reproduction, redistribution, modification, or commercial use without prior written permission is prohibited.",
       cr_share:"Sharing on social media with credit (mungdol.github.io) is welcome.",
       rv_eyebrow:"Visitor Reviews", rv_total:(n)=>`${n} total · showing latest 10`,
-      rv_email_ph:"Email (e.g. name@example.com)",
+      rv_email_ph:"Email (e.g. yourID@example.com)",
       rv_consent:"Your email is collected only for review management and never shared with third parties. It is shown partially masked (e.g. ab***@…). I agree to this collection and use.",
       rv_consent_req:"Please agree to the privacy notice.", rv_email_bad:"Please check your email address.", rv_msg_ph:"Leave a few words about this work",
       rv_submit:"Post review", rv_sending:"Posting…", rv_thanks:"Thank you for your review!",
@@ -413,7 +412,7 @@ const UI = {
       cr_notice:"本网站所有作品图片、诗文及解说的著作权均归MUNGDOL所有。未经著作权人事先书面同意，禁止复制、转载、传播、改编及商业使用。",
       cr_share:"欢迎注明出处（mungdol.github.io）后在社交媒体分享。",
       rv_eyebrow:"访客评论", rv_total:(n)=>`共${n}条 · 显示最新10条`,
-      rv_email_ph:"电子邮箱（例：name@example.com）",
+      rv_email_ph:"电子邮箱（例：ID@example.com）",
       rv_consent:"您的邮箱仅用于评论管理，绝不提供给第三方。页面上将部分隐藏显示（例：ab***@…）。我同意上述个人信息的收集与使用。",
       rv_consent_req:"请先同意个人信息使用条款。", rv_email_bad:"请确认您的邮箱地址。", rv_msg_ph:"请留下您对这幅作品的感想",
       rv_submit:"发表评论", rv_sending:"发送中…", rv_thanks:"感谢您的评论！",
@@ -448,7 +447,7 @@ const UI = {
       cr_notice:"本サイトのすべての作品画像・詩・解説の著作権はMUNGDOL（モンドル）に帰属します。著作権者の事前の書面による同意なく、複製・転載・配布・改変および商業利用を禁じます。",
       cr_share:"出典（mungdol.github.io）を明記したSNSでのシェアは歓迎します。",
       rv_eyebrow:"訪問者レビュー", rv_total:(n)=>`全${n}件 · 最新10件を表示`,
-      rv_email_ph:"メールアドレス（例：name@example.com）",
+      rv_email_ph:"メールアドレス（例：ID@example.com）",
       rv_consent:"メールアドレスはレビュー管理の目的にのみ収集・利用され、第三者に提供されることはありません。画面には一部を伏せて（例：ab***@…）表示されます。個人情報の収集・利用に同意します。",
       rv_consent_req:"個人情報の取り扱いに同意してください。", rv_email_bad:"メールアドレスをご確認ください。", rv_msg_ph:"この作品への一言をお寄せください",
       rv_submit:"レビューを投稿", rv_sending:"送信中…", rv_thanks:"レビューありがとうございます！",
