@@ -142,9 +142,12 @@
   .ab-quote{margin:32px 0 0;padding:6px 10px;background:transparent;border:none;text-align:center;font-family:'Gowun Batang','Noto Serif KR',serif;font-size:17px;line-height:2;color:var(--ink);font-style:normal}
   .ab-h2{font-family:'Noto Serif KR',serif;font-weight:900;font-size:20px;margin-bottom:10px}
   .ab-steps{margin:18px 0 0;padding:0;list-style:none;counter-reset:abstep;display:flex;flex-direction:column}
-  .ab-steps li{counter-increment:abstep;display:flex;align-items:baseline;gap:14px;background:transparent;border-bottom:1px solid var(--hairline);padding:11px 2px;font-size:14px}
+  .ab-steps li{counter-increment:abstep;display:flex;align-items:center;gap:14px;background:transparent;border-bottom:1px solid var(--hairline);padding:12px 2px;font-size:14px;min-height:58px}
   .ab-steps li:last-child{border-bottom:none}
   .ab-steps li::before{content:"0" counter(abstep);font-size:11px;letter-spacing:.1em;font-weight:600;color:var(--ink-soft);flex:none;width:26px}
+  .ab-steps .step-txt{flex:1;min-width:0}
+  .ab-steps .step-photo{flex:none;width:96px;height:72px;object-fit:cover;border-radius:3px;border:1px solid var(--hairline);margin-left:auto;pointer-events:none;background:var(--paper-deep)}
+  @media(max-width:420px){.ab-steps .step-photo{width:80px;height:60px}}
   .ab-book{display:block;width:180px;margin:4px auto 18px;border-radius:3px;border:1px solid var(--hairline)}
   .ab-closing{margin-top:48px;text-align:center;font-family:'Gowun Batang','Noto Serif KR',serif;font-weight:400;font-size:17px;color:var(--ink);letter-spacing:.02em}
 
@@ -595,7 +598,8 @@ function closeWork(){
   window.scrollTo({top:0});
 }
 function renderAbout(){
-  $("abSteps").innerHTML = (UI[lang].ab_steps||[]).map(s=>`<li>${esc(s)}</li>`).join("");
+  /* 단계별 사진: images/steps/step1.jpg ~ step5.jpg 가 있으면 표시, 없으면 자동 숨김 */
+  $("abSteps").innerHTML = (UI[lang].ab_steps||[]).map((s,i)=>`<li><span class="step-txt">${esc(s)}</span><img class="step-photo" src="images/steps/step${i+1}.jpg" alt="" loading="lazy" onerror="this.remove()"></li>`).join("");
 }
 function openAbout(){
   closeWork();
