@@ -2,160 +2,160 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<!-- DESIGN-V2-GALLERY 2026-07-19 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MUNGDOL — 죽필 캘리그라피</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#F5EEE3; --paper-deep:#ECE2D2;
     --ink:#221E17; --ink-soft:#6B6152;
     --accent:#8A6C48; --gold:#C4A468;
     --inju:#B8382E; --hairline:rgba(34,30,23,.12);
-    --shadow-s:0 2px 12px rgba(23,22,19,.06);
-    --shadow-m:0 12px 40px rgba(23,22,19,.14);
+    --frameline:rgba(34,30,23,.18);
     --ease:cubic-bezier(.22,.7,.25,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important;transition:none!important} }
-  body{overflow-x:hidden;background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',-apple-system,sans-serif;font-weight:300;line-height:1.75;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 22px 0}
+  body{overflow-x:hidden;background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',-apple-system,sans-serif;font-weight:400;line-height:1.8;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 22px 0}
   img,video{-webkit-user-drag:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
   .card img,.art-frame img,.d-photo,.ab-book,.brand-logo,.d-video{pointer-events:none}
 
   /* ── 상단 언어바: 반투명 블러 ── */
-  .langbar{position:sticky;top:0;z-index:20;background:rgba(248,246,241,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:14px 0;display:flex;justify-content:center;gap:6px;border-bottom:1px solid var(--hairline)}
-  .langbar button{font-family:inherit;font-size:12.5px;font-weight:500;letter-spacing:.06em;padding:7px 15px;border-radius:999px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--ink-soft);transition:all .25s var(--ease)}
+  .langbar{position:sticky;top:0;z-index:20;background:rgba(248,246,241,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:13px 0;display:flex;justify-content:center;gap:6px;border-bottom:1px solid var(--hairline)}
+  .langbar button{font-family:inherit;font-size:12.5px;font-weight:500;letter-spacing:.06em;padding:6px 14px;border-radius:999px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--ink-soft);transition:color .2s var(--ease),background .2s var(--ease)}
   .langbar button:hover{color:var(--ink)}
   .langbar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .langbar button.on{background:var(--ink);color:var(--paper)}
 
-  /* ── 히어로: 크게, 편집적으로 ── */
-  .site-hero{text-align:center;padding:72px 0 26px;animation:heroIn 1s var(--ease) both}
-  @keyframes heroIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  /* ── 히어로: 짧게, 조용하게 — 주인공은 작품 ── */
+  .site-hero{text-align:center;padding:46px 0 10px;animation:heroIn .9s var(--ease) both}
+  @keyframes heroIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   .site-hero .brand{position:relative;display:inline-block}
-  .site-hero .brand-logo{display:block;width:clamp(220px,44vw,400px);height:auto}
-  .site-hero .brand .seal{position:absolute;right:-6px;bottom:10px;width:34px;height:34px;border-radius:7px;background:var(--inju);color:var(--paper);font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;transform:rotate(-4deg);box-shadow:var(--shadow-s)}
-  .site-hero .tag{margin-top:20px;font-size:16px;color:var(--ink-soft);font-weight:300}
-  .site-hero .sub{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--accent);margin-top:18px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:14px}
-  .site-hero .sub::before,.site-hero .sub::after{content:"";width:30px;height:1px;background:var(--gold)}
+  .site-hero .brand-logo{display:block;width:clamp(150px,30vw,240px);height:auto}
+  .site-hero .brand .seal{position:absolute;right:-8px;bottom:6px;width:27px;height:27px;border-radius:5px;background:var(--inju);color:var(--paper);font-family:'Noto Serif KR',serif;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)}
+  .site-hero .tag{margin-top:16px;font-size:14px;color:var(--ink-soft);font-weight:300}
+  .site-hero .sub{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--ink-soft);opacity:.7;margin-top:12px;font-weight:500;display:flex;align-items:center;justify-content:center}
+  .about-link{margin-top:14px;background:transparent;border:none;padding:6px 2px;font-family:inherit;font-size:13px;font-weight:500;color:var(--accent);cursor:pointer;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+  .about-link:hover{color:var(--ink);border-bottom-color:var(--ink)}
+  .about-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-  /* ── 검색 + 주제 ── */
-  .controls{margin-top:34px;display:flex;flex-direction:column;gap:16px;align-items:center}
-  .search{width:100%;max-width:400px;position:relative}
-  .search input{width:100%;font-family:inherit;font-size:15px;padding:12px 18px 12px 44px;border-radius:999px;border:1px solid var(--hairline);background:#fff;color:var(--ink);box-shadow:var(--shadow-s);transition:box-shadow .25s var(--ease)}
-  .search input:focus{outline:none;box-shadow:0 0 0 2px var(--accent),var(--shadow-s)}
-  .search svg{position:absolute;left:17px;top:50%;transform:translateY(-50%);width:15px;height:15px;fill:var(--ink-soft)}
-  .themes{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-  .themes button{font-family:inherit;font-size:13px;font-weight:500;padding:8px 17px;border-radius:999px;cursor:pointer;border:1px solid var(--hairline);background:transparent;color:var(--ink-soft);transition:all .25s var(--ease)}
-  .themes button:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}
+  /* ── 검색 + 주제: 존재감 낮춤 ── */
+  .controls{margin-top:26px;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .search{width:100%;max-width:320px;position:relative}
+  .search input{width:100%;font-family:inherit;font-size:14px;padding:9px 16px 9px 38px;border-radius:999px;border:1px solid var(--hairline);background:rgba(255,255,255,.45);color:var(--ink);transition:border-color .2s var(--ease)}
+  .search input:focus{outline:none;border-color:var(--accent)}
+  .search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:14px;height:14px;fill:var(--ink-soft);opacity:.7}
+  .themes{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+  .themes button{font-family:inherit;font-size:12.5px;font-weight:500;padding:7px 15px;border-radius:999px;cursor:pointer;border:1px solid var(--hairline);background:transparent;color:var(--ink-soft);transition:color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+  .themes button:hover{border-color:var(--ink-soft);color:var(--ink)}
   .themes button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  .themes button.on{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(138,108,72,.25)}
-  .count{font-size:12.5px;letter-spacing:.08em;color:var(--ink-soft)}
+  .themes button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .count{font-size:11.5px;letter-spacing:.08em;color:var(--ink-soft);opacity:.85}
 
-  /* ── 매소너리 그리드: 작품을 자르지 않는다 ── */
-  .grid{margin-top:34px;display:grid;grid-template-columns:repeat(2,1fr);gap:22px 16px}
-  @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:28px 22px}}
-  @media(min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
-  .card{display:block;width:100%;min-width:0;max-width:100%;cursor:pointer;border:none;background:transparent;padding:0;text-align:left;font-family:inherit;color:inherit;animation:cardIn .7s var(--ease) both}
-  @keyframes cardIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-  .card:nth-child(1){animation-delay:.02s}.card:nth-child(2){animation-delay:.07s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.17s}.card:nth-child(5){animation-delay:.22s}.card:nth-child(6){animation-delay:.27s}.card:nth-child(7){animation-delay:.32s}.card:nth-child(8){animation-delay:.37s}.card:nth-child(n+9){animation-delay:.42s}
-  .card:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:12px}
-  .card .frame{border-radius:4px;overflow:hidden;background:#fff;position:relative;height:0;padding:0 0 140% 0;border:1px solid rgba(23,22,19,.16);box-shadow:var(--shadow-s);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
-  .card .frame img{position:absolute;top:9px;left:9px;width:calc(100% - 18px);height:calc(100% - 18px);object-fit:contain;background:#fff;display:block;outline:1px solid rgba(23,22,19,.09);outline-offset:-1px;transition:transform .6s var(--ease)}
-  .card:hover .frame{transform:translateY(-6px);box-shadow:var(--shadow-m)}
-  .card:hover img{transform:scale(1.035)}
-  .card .no{margin-top:11px;font-size:10.5px;letter-spacing:.22em;color:var(--accent);font-weight:500}
-  .card .t{margin-top:2px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:15px;line-height:1.5;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* ── 그리드: 전 구간 2열, 작품을 크게 ── */
+  .grid{margin-top:40px;display:grid;grid-template-columns:repeat(2,1fr);gap:30px 18px}
+  @media(min-width:700px){.grid{gap:48px 36px}}
+  @media(min-width:1000px){.grid{gap:60px 48px}}
+  .card{display:block;width:100%;min-width:0;max-width:100%;cursor:pointer;border:none;background:transparent;padding:0;text-align:left;font-family:inherit;color:inherit;animation:cardIn .55s var(--ease) both}
+  @keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .card:nth-child(1){animation-delay:.02s}.card:nth-child(2){animation-delay:.06s}.card:nth-child(3){animation-delay:.1s}.card:nth-child(4){animation-delay:.14s}.card:nth-child(5){animation-delay:.18s}.card:nth-child(6){animation-delay:.22s}.card:nth-child(7){animation-delay:.26s}.card:nth-child(8){animation-delay:.3s}.card:nth-child(n+9){animation-delay:.34s}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:3px}
+  .card .frame{border-radius:2px;overflow:hidden;background:#fff;position:relative;height:0;padding:0 0 140% 0;border:1px solid var(--frameline);transition:border-color .3s var(--ease)}
+  .card .frame img{position:absolute;top:8px;left:8px;width:calc(100% - 16px);height:calc(100% - 16px);object-fit:contain;background:#fff;display:block}
+  .card:hover .frame{border-color:rgba(34,30,23,.45)}
+  .card .no{margin-top:13px;font-size:10.5px;letter-spacing:.18em;color:var(--ink-soft);font-weight:500}
+  .card .t{margin-top:2px;font-family:'Noto Serif KR',serif;font-weight:600;font-size:15.5px;line-height:1.5;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .empty{margin-top:48px;text-align:center;color:var(--ink-soft)}
 
   /* ── 페이지네이션 ── */
-  .pager{margin-top:44px;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
-  .pager button{font-family:inherit;font-size:13.5px;font-weight:500;padding:9px 18px;border-radius:999px;cursor:pointer;border:1px solid var(--hairline);background:#fff;color:var(--ink);box-shadow:var(--shadow-s);transition:all .25s var(--ease)}
-  .pager button:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-m)}
-  .pager button:disabled{opacity:.3;cursor:default;box-shadow:none}
+  .pager{margin-top:52px;display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap}
+  .pager button{font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:999px;cursor:pointer;border:1px solid var(--hairline);background:transparent;color:var(--ink);transition:border-color .2s var(--ease)}
+  .pager button:hover:not(:disabled){border-color:var(--ink)}
+  .pager button:disabled{opacity:.3;cursor:default}
   .pager button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  .pager .pageinfo{font-size:12.5px;letter-spacing:.06em;color:var(--ink-soft)}
+  .pager .pageinfo{font-size:12px;letter-spacing:.06em;color:var(--ink-soft)}
 
-  /* ── 상세 ── */
+  /* ── 상세: 작품이 화면의 주인공 ── */
   .detail{display:none}
   body.detail-open .grid-view{display:none}
-  body.detail-open .detail{display:block;max-width:560px;margin:0 auto;animation:heroIn .6s var(--ease) both}
-  .back{display:inline-flex;align-items:center;gap:8px;margin:14px 0 22px;background:transparent;border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-soft);padding:6px 2px;transition:color .2s}
+  body.detail-open .detail{display:block;max-width:580px;margin:0 auto;animation:heroIn .5s var(--ease) both}
+  .back{display:inline-flex;align-items:center;gap:8px;margin:16px 0 24px;background:transparent;border:none;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--ink-soft);padding:6px 2px;transition:color .2s}
   .back:hover{color:var(--ink)}
   .back:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  .art-frame{border-radius:4px;background:#fff;padding:clamp(16px,4.5vw,30px);border:1.5px solid rgba(23,22,19,.55);box-shadow:var(--shadow-m);position:relative}
-  .art-frame::before{content:"";position:absolute;inset:6px;border:1px solid rgba(23,22,19,.14);pointer-events:none}
-  .art-frame img{width:100%;display:block;min-height:200px;background:var(--paper-deep);outline:1px solid rgba(23,22,19,.12);outline-offset:-1px}
-  .d-no{margin-top:30px;font-size:11px;letter-spacing:.3em;color:var(--accent);font-weight:500;text-transform:uppercase;display:flex;gap:14px;align-items:center}
-  .d-no .theme-chip{font-size:10.5px;letter-spacing:.12em;border:1px solid var(--accent);border-radius:999px;padding:3px 12px}
-  .d-title{font-family:'Noto Serif KR',serif;font-weight:900;font-size:clamp(28px,6.5vw,38px);line-height:1.3;margin-top:8px;letter-spacing:-.01em}
-  .d-poem{margin-top:22px;padding:26px 28px;background:#fff;border-radius:16px;box-shadow:var(--shadow-s);border-left:3px solid var(--accent)}
-  .poem-line + .poem-line{margin-top:15px}
-  .poem-line .k{font-family:'Noto Serif KR',serif;font-size:19px;line-height:1.6;font-weight:600}
-  .poem-line .r{font-size:13px;letter-spacing:.04em;color:var(--accent);font-weight:400;margin-top:2px}
-  .rom-note{margin-top:16px;font-size:11.5px;color:var(--ink-soft);opacity:.75}
-  .d-trans{margin-top:16px;font-size:15px;color:var(--ink-soft);white-space:pre-line;font-style:italic}
-  .d-section{padding:40px 0 0}
-  .eyebrow{font-size:11px;letter-spacing:.32em;font-weight:500;color:var(--accent);text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:13px}
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);flex:none}
+  .art-frame{border-radius:2px;background:#fff;padding:clamp(10px,3vw,20px);border:1px solid var(--frameline)}
+  .art-frame img{width:100%;display:block;min-height:200px;background:var(--paper-deep)}
+  .d-no{margin-top:28px;font-size:10.5px;letter-spacing:.28em;color:var(--ink-soft);font-weight:500;text-transform:uppercase;display:flex;gap:12px;align-items:center}
+  .d-no .theme-chip{font-size:10px;letter-spacing:.12em;border:1px solid var(--hairline);color:var(--ink-soft);border-radius:999px;padding:3px 11px}
+  .d-title{font-family:'Noto Serif KR',serif;font-weight:900;font-size:clamp(27px,6.2vw,37px);line-height:1.3;margin-top:8px;letter-spacing:-.01em}
+  .d-poem{margin-top:26px;padding:28px 4px;background:transparent;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+  .poem-line + .poem-line{margin-top:16px}
+  .poem-line .k{font-family:'Gowun Batang','Noto Serif KR',serif;font-size:19.5px;line-height:1.9;font-weight:400}
+  .poem-line .r{font-size:12.5px;letter-spacing:.04em;color:var(--accent);font-weight:400;margin-top:2px}
+  .rom-note{margin-top:18px;font-size:11px;color:var(--ink-soft);opacity:.75}
+  .d-trans{margin-top:18px;font-size:14.5px;color:var(--ink-soft);white-space:pre-line;font-style:italic}
+  .d-section{padding:46px 0 0}
+  .eyebrow{font-size:10.5px;letter-spacing:.28em;font-weight:500;color:var(--ink-soft);text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:14px}
   .eyebrow::after{content:"";flex:1;height:1px;background:var(--hairline)}
-  .d-section p{font-size:15px;color:var(--ink-soft)}
-  .listen{margin-top:20px;display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:14px;font-weight:500;color:var(--accent);background:transparent;cursor:pointer;border:1px solid var(--accent);border-radius:999px;padding:11px 24px;transition:all .25s var(--ease)}
-  .listen:hover{background:var(--accent);color:var(--paper);transform:translateY(-1px);box-shadow:0 6px 18px rgba(138,108,72,.28)}
+  .d-section p{font-size:14.5px;color:var(--ink-soft);line-height:1.85}
+  .listen{margin-top:20px;display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:14px;font-weight:500;color:var(--accent);background:transparent;cursor:pointer;border:1px solid var(--accent);border-radius:999px;padding:10px 23px;transition:background .25s var(--ease),color .25s var(--ease)}
+  .listen:hover{background:var(--accent);color:var(--paper)}
   .listen:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .listen svg{width:15px;height:15px;fill:currentColor}
-  .nav-works{margin-top:50px;display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--hairline);padding-top:24px}
-  .nav-works button{background:transparent;border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-soft);padding:6px 2px;max-width:45%;text-align:inherit;transition:color .2s}
+  .nav-works{margin-top:54px;display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--hairline);padding-top:24px}
+  .nav-works button{background:transparent;border:none;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--ink-soft);padding:6px 2px;max-width:45%;text-align:inherit;transition:color .2s}
   .nav-works button:hover{color:var(--ink)}
   .nav-works button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-  /* ── 방문 리뷰 ── */
-  .rv-count{font-size:11px;letter-spacing:.1em;color:var(--ink-soft)}
-  .rv-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-  .rv-item{background:#fff;border:1px solid var(--hairline);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-s)}
-  .rv-item .rv-head{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--ink-soft);margin-bottom:5px}
+  /* ── 방문 리뷰: 카드 대신 괘선 ── */
+  .rv-count{font-size:10.5px;letter-spacing:.1em;color:var(--ink-soft)}
+  .rv-list{display:flex;flex-direction:column;margin-bottom:22px}
+  .rv-item{background:transparent;border-bottom:1px solid var(--hairline);padding:14px 2px}
+  .rv-item:last-child{border-bottom:none}
+  .rv-item .rv-head{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;color:var(--ink-soft);margin-bottom:5px}
   .rv-item .rv-name{font-weight:600;color:var(--ink)}
-  .rv-item .rv-body{font-size:14.5px;line-height:1.7;word-break:break-word;white-space:pre-line}
-  .rv-empty,.rv-loading{font-size:13.5px;color:var(--ink-soft);padding:6px 2px}
+  .rv-item .rv-body{font-size:14px;line-height:1.75;word-break:break-word;white-space:pre-line}
+  .rv-empty,.rv-loading{font-size:13px;color:var(--ink-soft);padding:6px 2px}
   .rv-form{position:relative;display:flex;flex-direction:column;gap:9px}
-  .rv-form input[type=text],.rv-form textarea{width:100%;font-family:inherit;font-size:14.5px;padding:11px 14px;border:1px solid var(--hairline);border-radius:10px;background:#fff;color:var(--ink)}
+  .rv-form input[type=text],.rv-form input[type=email],.rv-form textarea{width:100%;font-family:inherit;font-size:14px;padding:10px 13px;border:1px solid var(--hairline);border-radius:8px;background:rgba(255,255,255,.5);color:var(--ink)}
   .rv-form textarea{min-height:84px;resize:vertical}
-  .rv-form input:focus,.rv-form textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
-  .rv-submit{align-self:flex-start;font-family:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border:none;border-radius:999px;padding:11px 26px;cursor:pointer;transition:all .25s var(--ease)}
-  .rv-submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-m)}
+  .rv-form input:focus,.rv-form textarea:focus{outline:none;border-color:var(--accent)}
+  .rv-submit{align-self:flex-start;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--paper);background:var(--ink);border:none;border-radius:999px;padding:10px 25px;cursor:pointer;transition:opacity .2s var(--ease)}
+  .rv-submit:hover:not(:disabled){opacity:.85}
   .rv-submit:disabled{opacity:.5;cursor:default}
-  .rv-consent{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.7;color:var(--ink-soft);cursor:pointer}
+  .rv-submit:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .rv-consent{display:flex;gap:9px;align-items:flex-start;font-size:11.5px;line-height:1.7;color:var(--ink-soft);cursor:pointer}
   .rv-consent input{margin-top:3px;accent-color:var(--accent);flex:none}
   .rv-note{font-size:12px;color:var(--ink-soft);min-height:18px}
 
-  .d-photo{width:100%;border-radius:12px;margin:4px 0 14px;box-shadow:var(--shadow-s);display:block}
-  .d-video{display:block;width:100%;max-width:340px;margin:4px auto 18px;border-radius:14px;box-shadow:var(--shadow-m);background:#000}
+  .d-photo{width:100%;border-radius:3px;margin:4px 0 14px;border:1px solid var(--hairline);display:block}
+  .d-video{display:block;width:100%;max-width:340px;margin:4px auto 18px;border-radius:4px;background:#000}
+
   /* ── 작가 소개 ── */
-  .about-link{margin-top:22px;background:transparent;border:1px solid var(--hairline);border-radius:999px;padding:9px 22px;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .25s var(--ease)}
-  .about-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
-  .about-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .about{display:none}
   body.about-open .grid-view{display:none}
-  body.about-open .about{display:block;max-width:560px;margin:0 auto;animation:heroIn .6s var(--ease) both}
-  .ab-lead{margin-top:18px;font-size:16px;line-height:1.9;color:var(--ink)}
-  .ab-quote{margin:26px 0 0;padding:20px 24px;background:#fff;border-left:3px solid var(--gold);border-radius:0 12px 12px 0;box-shadow:var(--shadow-s);font-family:'Noto Serif KR',serif;font-size:15.5px;line-height:1.85;color:var(--ink-soft);font-style:normal}
-  .ab-h2{font-family:'Noto Serif KR',serif;font-weight:900;font-size:21px;margin-bottom:10px}
-  .ab-steps{margin:20px 0 0;padding:0;list-style:none;counter-reset:abstep;display:flex;flex-direction:column;gap:10px}
-  .ab-steps li{counter-increment:abstep;display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--hairline);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow-s);font-size:14.5px}
-  .ab-steps li::before{content:"0" counter(abstep);font-size:11px;letter-spacing:.14em;font-weight:600;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:4px 10px;flex:none}
-  .ab-book{display:block;width:200px;margin:4px auto 18px;border-radius:8px;box-shadow:var(--shadow-m)}
-  .ab-closing{margin-top:44px;text-align:center;font-family:'Noto Serif KR',serif;font-weight:600;font-size:17px;color:var(--ink);letter-spacing:.02em}
+  body.about-open .about{display:block;max-width:580px;margin:0 auto;animation:heroIn .5s var(--ease) both}
+  .ab-lead{margin-top:18px;font-size:15.5px;line-height:1.95;color:var(--ink)}
+  .ab-quote{margin:32px 0 0;padding:6px 10px;background:transparent;border:none;text-align:center;font-family:'Gowun Batang','Noto Serif KR',serif;font-size:17px;line-height:2;color:var(--ink);font-style:normal}
+  .ab-h2{font-family:'Noto Serif KR',serif;font-weight:900;font-size:20px;margin-bottom:10px}
+  .ab-steps{margin:18px 0 0;padding:0;list-style:none;counter-reset:abstep;display:flex;flex-direction:column}
+  .ab-steps li{counter-increment:abstep;display:flex;align-items:baseline;gap:14px;background:transparent;border-bottom:1px solid var(--hairline);padding:11px 2px;font-size:14px}
+  .ab-steps li:last-child{border-bottom:none}
+  .ab-steps li::before{content:"0" counter(abstep);font-size:11px;letter-spacing:.1em;font-weight:600;color:var(--ink-soft);flex:none;width:26px}
+  .ab-book{display:block;width:180px;margin:4px auto 18px;border-radius:3px;border:1px solid var(--hairline)}
+  .ab-closing{margin-top:48px;text-align:center;font-family:'Gowun Batang','Noto Serif KR',serif;font-weight:400;font-size:17px;color:var(--ink);letter-spacing:.02em}
 
-  footer{margin-top:80px;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:52px 26px 46px;background:#1C1812;text-align:center;font-size:11.5px;letter-spacing:.18em;color:#A99878}
+  footer{margin-top:90px;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:54px 26px 48px;background:#1C1812;text-align:center;font-size:11.5px;letter-spacing:.18em;color:#A99878}
   footer .footer-contact{margin-top:18px;letter-spacing:.08em;font-size:12px;color:#A99878}
   footer .footer-contact a{color:#C4A468;text-decoration:none;border-bottom:1px solid rgba(196,164,104,.4)}
   footer .footer-contact a:hover{border-bottom-color:#C4A468}
   footer .copyright-line{margin-top:16px;letter-spacing:.06em;font-weight:500;color:#C4A468}
   footer .copyright-notice{margin:9px auto 0;max-width:460px;font-size:11px;letter-spacing:0;line-height:1.75;color:#8E8168}
 
-  /* ── 앱 내장 브라우저 안내창 ── */
+  /* ── 앱 내장 브라우저 안내창 (모달만 그림자 유지) ── */
   .iab-overlay{position:fixed;inset:0;background:rgba(23,22,19,.5);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-end;justify-content:center}
   .iab-overlay.show{display:flex}
   .iab-box{background:var(--paper);border-radius:20px 20px 0 0;padding:28px 24px 32px;max-width:480px;width:100%;box-shadow:0 -8px 40px rgba(0,0,0,.28)}
@@ -163,8 +163,8 @@
   .iab-box h2{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:900;margin-bottom:10px}
   .iab-box p{font-size:14.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px}
   .iab-box .manual{font-size:13px;color:var(--ink-soft);opacity:.85;margin-top:12px;margin-bottom:0}
-  .iab-btn{display:block;width:100%;text-align:center;font-family:inherit;font-size:15.5px;font-weight:700;padding:14px 0;border-radius:999px;cursor:pointer;border:none;background:var(--accent);color:#fff;margin-bottom:9px;transition:transform .2s var(--ease)}
-  .iab-btn:hover{transform:translateY(-1px)}
+  .iab-btn{display:block;width:100%;text-align:center;font-family:inherit;font-size:15.5px;font-weight:700;padding:14px 0;border-radius:999px;cursor:pointer;border:none;background:var(--accent);color:#fff;margin-bottom:9px;transition:opacity .2s var(--ease)}
+  .iab-btn:hover{opacity:.9}
   .iab-btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--hairline);font-weight:500}
 
   [data-i18n]{transition:opacity .2s ease}
@@ -317,7 +317,7 @@
 
 <script src="works.js"></script>
 <script>
-const PER_PAGE = 24;
+const PER_PAGE = 12;
 const IMG_FULL = id => `images/full/${id}.jpg`;
 const IMG_THUMB = id => `images/thumb/${id}.jpg`;
 
