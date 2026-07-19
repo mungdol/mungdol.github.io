@@ -149,6 +149,9 @@
   .ab-closing{margin-top:44px;text-align:center;font-family:'Noto Serif KR',serif;font-weight:600;font-size:17px;color:var(--ink);letter-spacing:.02em}
 
   footer{margin-top:80px;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:52px 26px 46px;background:#1C1812;text-align:center;font-size:11.5px;letter-spacing:.18em;color:#A99878}
+  footer .footer-contact{margin-top:18px;letter-spacing:.08em;font-size:12px;color:#A99878}
+  footer .footer-contact a{color:#C4A468;text-decoration:none;border-bottom:1px solid rgba(196,164,104,.4)}
+  footer .footer-contact a:hover{border-bottom-color:#C4A468}
   footer .copyright-line{margin-top:16px;letter-spacing:.06em;font-weight:500;color:#C4A468}
   footer .copyright-notice{margin:9px auto 0;max-width:460px;font-size:11px;letter-spacing:0;line-height:1.75;color:#8E8168}
 
@@ -242,6 +245,7 @@
         <input type="email" id="rvEmail" maxlength="60" autocomplete="email">
         <textarea id="rvMsg" maxlength="500" required></textarea>
         <label class="rv-consent"><input type="checkbox" id="rvConsent"><span data-i18n="rv_consent"></span></label>
+        <label class="rv-consent"><input type="checkbox" id="rvNews"><span data-i18n="rv_news"></span></label>
         <input type="text" id="rvWeb" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <button type="submit" class="rv-submit" id="rvSubmit"></button>
         <div class="rv-note" id="rvNote"></div>
@@ -294,6 +298,7 @@
 
   <footer>
     <div>MUNGDOL · SEOUL · POEM &amp; CALLIGRAPHY BY ONE HAND</div>
+    <div class="footer-contact">CONTACT · <a href="mailto:mungdol@gmail.com">mungdol@gmail.com</a></div>
     <div class="copyright-line">© 2026 MUNGDOL. All rights reserved.</div>
     <p class="copyright-notice" data-i18n="cr_notice">이 사이트의 모든 작품 이미지, 시, 해설은 멍돌(MUNGDOL)에게 저작권이 있습니다. 저작권자의 사전 서면 동의 없이 복제, 전재, 배포, 2차적 저작물 작성 및 상업적 이용을 금합니다.</p>
     <p class="copyright-notice" data-i18n="cr_share">출처(mungdol.github.io)를 명시한 SNS 공유는 환영합니다.</p>
@@ -344,7 +349,7 @@ const UI = {
       rv_eyebrow:"방문 리뷰", rv_total:(n)=>`전체 ${n}개 · 최신 10개 표시`,
       rv_email_ph:"이메일 (예: ID@example.com)",
       rv_consent:"이메일은 리뷰 관리 목적으로만 수집·이용되며 제3자에게 제공되지 않습니다. 화면에는 일부가 가려져(예: ab***@…) 표시됩니다. 개인정보 수집·이용에 동의합니다.",
-      rv_consent_req:"개인정보 수집·이용에 동의해 주세요.", rv_email_bad:"이메일 주소를 확인해 주세요.", rv_msg_ph:"이 작품에 대한 한마디를 남겨주세요",
+      rv_consent_req:"개인정보 수집·이용에 동의해 주세요.", rv_email_bad:"이메일 주소를 확인해 주세요.", rv_news:"(선택) 멍돌의 신작품·소식 메일 수신에 동의합니다.", rv_msg_ph:"이 작품에 대한 한마디를 남겨주세요",
       rv_submit:"리뷰 남기기", rv_sending:"등록 중…", rv_thanks:"소중한 리뷰 감사합니다!",
       rv_empty:"아직 리뷰가 없습니다. 첫 리뷰를 남겨주세요.", rv_loading:"리뷰 불러오는 중…",
       rv_error:"잠시 후 다시 시도해 주세요.", rv_anon:"방문자",
@@ -379,7 +384,7 @@ const UI = {
       rv_eyebrow:"Visitor Reviews", rv_total:(n)=>`${n} total · showing latest 10`,
       rv_email_ph:"Email (e.g. yourID@example.com)",
       rv_consent:"Your email is collected only for review management and never shared with third parties. It is shown partially masked (e.g. ab***@…). I agree to this collection and use.",
-      rv_consent_req:"Please agree to the privacy notice.", rv_email_bad:"Please check your email address.", rv_msg_ph:"Leave a few words about this work",
+      rv_consent_req:"Please agree to the privacy notice.", rv_email_bad:"Please check your email address.", rv_news:"(Optional) I'd like to receive emails about Mungdol's new works and news.", rv_msg_ph:"Leave a few words about this work",
       rv_submit:"Post review", rv_sending:"Posting…", rv_thanks:"Thank you for your review!",
       rv_empty:"No reviews yet. Be the first!", rv_loading:"Loading reviews…",
       rv_error:"Please try again in a moment.", rv_anon:"Visitor",
@@ -414,7 +419,7 @@ const UI = {
       rv_eyebrow:"访客评论", rv_total:(n)=>`共${n}条 · 显示最新10条`,
       rv_email_ph:"电子邮箱（例：ID@example.com）",
       rv_consent:"您的邮箱仅用于评论管理，绝不提供给第三方。页面上将部分隐藏显示（例：ab***@…）。我同意上述个人信息的收集与使用。",
-      rv_consent_req:"请先同意个人信息使用条款。", rv_email_bad:"请确认您的邮箱地址。", rv_msg_ph:"请留下您对这幅作品的感想",
+      rv_consent_req:"请先同意个人信息使用条款。", rv_email_bad:"请确认您的邮箱地址。", rv_news:"（可选）我愿意接收Mungdol新作品与最新消息的邮件。", rv_msg_ph:"请留下您对这幅作品的感想",
       rv_submit:"发表评论", rv_sending:"发送中…", rv_thanks:"感谢您的评论！",
       rv_empty:"还没有评论，来留下第一条吧。", rv_loading:"正在加载评论…",
       rv_error:"请稍后再试。", rv_anon:"访客",
@@ -449,7 +454,7 @@ const UI = {
       rv_eyebrow:"訪問者レビュー", rv_total:(n)=>`全${n}件 · 最新10件を表示`,
       rv_email_ph:"メールアドレス（例：ID@example.com）",
       rv_consent:"メールアドレスはレビュー管理の目的にのみ収集・利用され、第三者に提供されることはありません。画面には一部を伏せて（例：ab***@…）表示されます。個人情報の収集・利用に同意します。",
-      rv_consent_req:"個人情報の取り扱いに同意してください。", rv_email_bad:"メールアドレスをご確認ください。", rv_msg_ph:"この作品への一言をお寄せください",
+      rv_consent_req:"個人情報の取り扱いに同意してください。", rv_email_bad:"メールアドレスをご確認ください。", rv_news:"（任意）モンドルの新作・お知らせメールの受信に同意します。", rv_msg_ph:"この作品への一言をお寄せください",
       rv_submit:"レビューを投稿", rv_sending:"送信中…", rv_thanks:"レビューありがとうございます！",
       rv_empty:"まだレビューがありません。最初の一言をどうぞ。", rv_loading:"レビューを読み込み中…",
       rv_error:"しばらくしてからもう一度お試しください。", rv_anon:"訪問者",
@@ -697,11 +702,11 @@ $("rvForm").addEventListener("submit", async e=>{
     const r = await fetch(REVIEWS_API, {
       method:"POST",
       headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body: JSON.stringify({ work: currentId, email: email.slice(0,60), msg: msg.slice(0,500), web: $("rvWeb").value })
+      body: JSON.stringify({ work: currentId, email: email.slice(0,60), msg: msg.slice(0,500), news: $("rvNews").checked ? "Y" : "", web: $("rvWeb").value })
     });
     const d = await r.json();
     if(d && d.ok){
-      $("rvMsg").value = ""; $("rvEmail").value = ""; $("rvConsent").checked = false;
+      $("rvMsg").value = ""; $("rvEmail").value = ""; $("rvConsent").checked = false; $("rvNews").checked = false;
       $("rvNote").textContent = UI[lang].rv_thanks;
       loadReviews(currentId);
     }else{ $("rvNote").textContent = UI[lang].rv_error; }
